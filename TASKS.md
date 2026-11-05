@@ -25,7 +25,7 @@ None currently.
 
 - Shared Terra/Luna durable-context bootstrap authored.
 - **VBUOY-001** `[done]` — Foundation: React/TypeScript/Vite shell, Supabase client and direct project verification, MapLibre setup, test/lint/type/build baseline, real-data-informed schema/API proposal, desktop and narrow UAT, and durable evidence.
-- **VBUOY-002** `[done]` — Three synthetic western Lake Erie buoys, evidence-informed 16-parameter/69-channel V1 schema, seeded correlated normal generator, seven-day backfill, secured Supabase cron/Edge Function stream, two directly verified scheduled ticks, map/status preview, 30-day acceptance and desktop/narrow UAT. Commit/push SHA is recorded in the final handoff and project log.
+- **VBUOY-002** `[done]` — Three synthetic western Lake Erie buoys, evidence-informed 16-parameter/69-channel V1 schema, seeded correlated normal generator, seven-day backfill, secured Supabase cron/Edge Function stream, two directly verified scheduled ticks, map/status preview, 30-day acceptance and desktop/narrow UAT. The final commit SHA is in the handoff.
 
 ## Deferred
 

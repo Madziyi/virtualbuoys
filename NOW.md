@@ -177,4 +177,4 @@ The fixed-seed 30-day simulator and acceptance tests pass. Exact run metrics are
 
 ## Next action
 
-Commit and push the verified VBUOY-002 handoff to `main`. Next: VBUOY-003 public explorer.
+Next initiative: VBUOY-003 public explorer.
