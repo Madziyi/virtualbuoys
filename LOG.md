@@ -91,3 +91,15 @@ Suggested format:
 - **Not accepted as closure:** Requested 390 px emulation reported 559 CSS px; desktop/full keyboard coverage, explicit card↔history value agreement, exact same-view CSV proof and mocked multi-page pagination coverage remain incomplete.
 - **Code-review note:** `fetchHistory` implements per-channel 1,000-row paging and then flattens/sorts depth channels, but the current tests do not exercise a second page. Closure requires that regression test.
 - **Decision:** Keep VBUOY-003 active. Next pass is verification/fix-only; do not move to VBUOY-004 until the remaining acceptance checks pass.
+
+
+### 2026-11-05 — VBUOY-003 verification and closure
+- **Changed:** Added mocked pagination and CSV tests; enlarged SVG axis labels on narrow screens and anchored the end date so the mobile chart remains readable. No other product scope added.
+- **Verification:** `npm test`: 3 files, 10 tests passed; `npm run lint`, `npm run typecheck`, `npm run build`, and `git diff --check` passed. Build retains MapLibre large-chunk advisory (1,531.27 kB). Mocked two-depth read crossed the 1,000-row boundary and returned 1,003 unique, ordered rows.
+- **Mobile UAT:** Effective viewport `innerWidth=390`, `innerHeight=840`; client width = scroll width = 367 px. Inspected full-page map, selectors, grouped readings, controls, chart, education, table and CSV.
+- **Desktop/accessibility UAT:** Effective viewport 1440×900; client = scroll width = 1418 px. Full-page layout inspected; buoy and parameter/range selection, chart, table and download control verified. Tab and Enter activated all three external controls and all three map markers, with visible focus and synchronized `aria-pressed`/heading state.
+- **Agreement:** Central water temperature, 1 m, `2026-11-05T17:10:00.000Z`: history value 11.3019186803057 °C and card 11.30 °C after display rounding.
+- **CSV:** Same Central water-temperature 24 h view showed 432 rows and generated a 432-row CSV named `central-water-temperature-24h.csv` (download collision suffix `(1)`); verified UTC ISO timestamps, depths 1/4/8 m, °C, synthetic source and empty direction convention. Unit test covers current direction TO metadata.
+- **Live state/security:** Public probe: 69 latest rows, all three buoys, anonymous observation insert rejected with 42501, unauthenticated function 401. No schema, scheduler, generator or deployed-function changes.
+- **Known issues:** Existing MapLibre build size advisory and external map tile dependency.
+- **Next action:** Owner/Terra selects and plans the next initiative.

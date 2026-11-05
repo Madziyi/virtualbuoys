@@ -9,7 +9,7 @@ States:
 
 ## In progress
 
-- **VBUOY-003** `[in-progress]` — Implementation is present; closure pass remains: true 390 px + desktop UAT, all-marker/control keyboard coverage, latest/history agreement, same-view CSV verification, and mocked multi-page pagination test.
+None currently.
 
 ## Ready
 
@@ -22,6 +22,8 @@ States:
 None currently.
 
 ## Done
+
+- **VBUOY-003** `[done]` — Public explorer, verified live data, complete pagination/CSV coverage and desktop/mobile/keyboard UAT. See NOW.md and LOG.md for evidence.
 
 - Shared Terra/Luna durable-context bootstrap authored.
 - **VBUOY-001** `[done]` — Foundation: React/TypeScript/Vite shell, Supabase client and direct project verification, MapLibre setup, test/lint/type/build baseline, real-data-informed schema/API proposal, desktop and narrow UAT, and durable evidence.

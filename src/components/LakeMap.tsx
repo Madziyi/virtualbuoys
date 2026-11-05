@@ -44,7 +44,7 @@ function Chart({rows, direction, unit}: {rows: Observation[]; direction?: string
   const colors = ['#247f79','#d09458','#516e9a']
   return <><div className="legend">{depths.map((d,i) => <span key={String(d)}><i style={{background: colors[i]}} />{d === null ? 'Surface' : `${d} m`}</span>)}</div><svg className="history-chart" viewBox="0 0 800 220" role="img" aria-label={`Historical observations in ${unit}; exact values are available in the table below`}>
     <line x1="45" y1="30" x2="45" y2="180" stroke="#9eafaa"/><line x1="45" y1="180" x2="765" y2="180" stroke="#9eafaa"/>
-    <text x="2" y="34">{max.toFixed(1)}</text><text x="2" y="180">{min.toFixed(1)}</text><text x="45" y="207">{new Date(minT).toLocaleDateString()}</text><text x="675" y="207">{new Date(maxT).toLocaleDateString()}</text>
+    <text x="2" y="34">{max.toFixed(1)}</text><text x="2" y="180">{min.toFixed(1)}</text><text x="45" y="207">{new Date(minT).toLocaleDateString()}</text><text x="765" y="207" textAnchor="end">{new Date(maxT).toLocaleDateString()}</text>
     {depths.map((depth,i) => { const series = rows.filter(r => r.depth_m === depth); const segments: Observation[][] = []; series.forEach(r => { const last = segments.at(-1); if (!last || Date.parse(r.observed_at) - Date.parse(last[last.length-1].observed_at) > 600000) segments.push([r]); else last.push(r) }); return direction ? <g key={String(depth)}>{series.map(r => <circle key={r.observed_at} cx={x(r)} cy={y(r)} r="1.7" fill={colors[i]} />)}</g> : <g key={String(depth)}>{segments.map((segment,j) => <polyline key={j} fill="none" stroke={colors[i]} strokeWidth="2" points={segment.map(r => `${x(r)},${y(r)}`).join(' ')} />)}</g> })}
   </svg></>
 }

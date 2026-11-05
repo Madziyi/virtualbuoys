@@ -1,7 +1,7 @@
 # Active Initiative
 
 **Initiative:** VBUOY-003 — Public explorer  
-**Status:** PARTIAL — IMPLEMENTED; UAT AND REVIEW REMAIN
+**Status:** COMPLETE — VERIFIED 2026-11-05
 **Planner:** Terra  
 **Implementation / verification:** Luna / Codex
 
@@ -340,12 +340,12 @@ Desktop and ~390 px mobile:
 Luna syncs `main`, implements this bounded VBUOY-003 public explorer, performs live-data desktop/mobile/accessibility UAT, updates durable context and pushes the standard handoff.
 
 
-## Implementation handoff — 2026-11-05
+## Implementation handoff — 2026-11-05 (superseded by closure below)
 
 Explorer implementation is present, but do not declare VBUOY-003 complete. The browser viewport override requested at 390 CSS px reported 559 CSS px, so the required ~390 px UAT and overflow verification remain open. Desktop-size UAT, all-marker keyboard/focus coverage, and explicit latest-card/chart timestamp agreement still need verification. A seven-day Central temperature view reported 3,024 observations; a separate 24-hour CSV contained 432 data rows, matching the previously displayed 432-row view, but the browser download automation stalled and the exact same-view check should be repeated. Add a focused pagination test with mocked multi-page responses. Recheck the complete acceptance criteria before closure.
 
 
-## Terra review — closure pass required
+## Terra review — closure pass required (completed below)
 
 Terra reviewed commit `7d1de48ca2f81099ab5e83f4fd753742c7759260` and accepts the implementation direction, but agrees with Luna that VBUOY-003 is **not yet complete**.
 
@@ -398,3 +398,16 @@ If any check reveals a defect, make the smallest targeted fix, rerun the affecte
 ## Next action
 
 Luna performs the VBUOY-003 verification/fix-only closure pass above and pushes the final verified handoff.
+
+
+## VBUOY-003 closure — 2026-11-05
+
+All closure checks passed; VBUOY-003 is complete. The next initiative is for the owner/Terra to choose and plan; do not start VBUOY-004 or Event Mode as part of this pass.
+
+- Actual browser `innerWidth` 390, `innerHeight` 840; document client/scroll widths both 367 CSS px. Inspected map, three selectors, grouped readings, parameter/range controls, chart, educational copy, table and download. Full-page visual inspection passed after enlarging the mobile SVG axis labels; exact-value table remains horizontally scrollable within its own container.
+- Desktop actual viewport 1440×900; client/scroll widths both 1418 px. Inspected full layout; selected buoy, parameter/range changes, multi-depth chart, table and CSV control worked. A Central 7-day dissolved-oxygen view returned 2,016 values across two depths.
+- Natural Tab and Enter activated West, Central and East in both map and external controls; each showed `:focus-visible` with a solid outline and synchronized both sets of `aria-pressed` states and selected heading.
+- Central water temperature at 1 m, `2026-11-05T17:10:00.000Z`, was 11.3019186803057 °C in the exact-value table and 11.30 °C on the latest card.
+- Central water temperature / 24 h displayed 432 observations; browser download produced `central-water-temperature-24h.csv` (browser appended `(1)` because a file existed) with 432 data rows, 1/4/8 m depths, °C, ISO UTC timestamps, synthetic provenance and blank direction convention. A unit test also checks TO direction serialization.
+- Mocked pagination test returned 1,003 ordered, unique rows across two depths, including 1,001 rows in one channel and requests for ranges 0–999 and 1000–1999.
+- `npm test` 3 files / 10 tests; lint, typecheck, build and `git diff --check` passed. Existing MapLibre bundle advisory remains (1,531.27 kB main chunk). Public probe returned 69 latest rows, rejected anonymous insert with 42501 and returned 401 for the unauthenticated function. No infrastructure was changed.

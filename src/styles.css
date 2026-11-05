@@ -149,3 +149,5 @@ details { margin-top:18px; } summary { cursor:pointer; color:#247f79; font-weigh
 .table-wrap { max-height:320px; overflow:auto; margin-top:12px; }
 table { width:100%; border-collapse:collapse; font-size:12px; text-align:left; } th,td { padding:8px; border-bottom:1px solid var(--line); white-space:nowrap; }
 @media(max-width:720px) { .buoy-summaries { grid-template-columns:repeat(3,minmax(0,1fr)); } .buoy-summary { padding:12px 8px; border-right:1px solid #e6ebe6; border-bottom:0; } .buoy-summary strong { font-size:11px; } .reading-groups,.education { grid-template-columns:1fr; } .detail,.history { padding:32px 4px; } .history-controls label { width:100%; } .history-controls select { width:100%; } .reading span { text-align:left; } }
+
+@media (max-width: 720px) { .history-chart text { font-size: 28px; } }
