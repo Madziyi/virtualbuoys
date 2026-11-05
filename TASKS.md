@@ -9,11 +9,10 @@ States:
 
 ## In progress
 
-None.
+- **VBUOY-002** `[in-progress]` — Three virtual western Lake Erie buoys, frozen V1 public sensor catalogue, seeded correlated normal generator, 7-day synthetic backfill, live 10-minute scheduled observations and verification.
 
 ## Ready
 
-- **VBUOY-002** `[ready]` — Virtual buoy network: three western Lake Erie virtual buoys, verified public parameter schema, correlated normal generator, 10-minute permanent observations.
 - **VBUOY-003** `[ready]` — Public explorer: map, buoy detail, parameter explanations, depth profiles, charts, CSV download.
 - **VBUOY-004** `[ready]` — Public REST API + OpenAPI/Swagger playground + Python/JS/curl examples.
 - **VBUOY-005** `[ready]` — Event Mode: isolated Normal/Storm/Turnover/HAB simulations at 1×/2×/5×/10×.

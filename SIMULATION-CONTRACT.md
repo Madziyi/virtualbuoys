@@ -140,31 +140,32 @@ Public current data should ultimately expose:
 - compass label;
 - depth.
 
-Before implementation, the project must explicitly choose whether current direction uses a FROM or TO convention, based on the source instrument/data convention. Do not guess.
+VBUOY-002 decision: public current direction uses the **TO** convention because it is derived directly from eastward (`u`) and northward (`v`) velocity components. Bearing is clockwise from true north: `(atan2(u, v) × 180/π + 360) mod 360`. This is a derived public representation, not a claim about a separate source direction sensor.
 
 ## 8. Depth profile philosophy
 
 The public product should use a small representative set of depths rather than every possible sensor channel.
 
-The current conceptual target is approximately three depths for selected parameters, but exact depths must be derived from the real buoy/reference data before schema freeze.
+VBUOY-002 uses three **virtual design depths** for water temperature and current: **1 m, 4 m and 8 m**. Dissolved-oxygen saturation is exposed at **1 m and 8 m**. These are deliberately simple educational profile levels informed by the available multi-depth source data; they are not claims that every historical reference buoy used exactly those three sensor positions.
 
 ## 9. Parameter/unit policy
 
-Likely public parameters include a subset of:
-- water temperature;
-- dissolved oxygen;
-- current speed/direction;
-- phycocyanin;
-- nitrate;
-- wind speed/gust/direction;
-- air temperature;
-- humidity;
-- barometric pressure;
-- wave height.
+VBUOY-002 freezes the initial public catalogue to:
+- water temperature at 1/4/8 m — °C;
+- dissolved-oxygen saturation at 1/8 m — %;
+- current speed at 1/4/8 m — m/s;
+- current TO direction at 1/4/8 m — degrees + compass;
+- phycocyanin at 1 m — µg/L;
+- turbidity at 2 m — NTU;
+- air temperature — °C;
+- barometric pressure — hPa;
+- wind speed/gust — m/s;
+- wind FROM direction — degrees + compass;
+- significant wave height — m;
+- wave mean period — s;
+- wave FROM direction — degrees + compass.
 
-Exact names and units are **not frozen yet**.
-
-VBUOY-001/VBUOY-002 must verify them against real buoy datasets/reference material and then update this contract.
+CDOM, chlorophyll, nitrate, maximum wave height and humidity are intentionally omitted from V1 to keep the public experience understandable and because the newly supplied calibration datasets do not provide equally useful evidence for all of them.
 
 ## 10. Long-run acceptance philosophy
 
@@ -193,3 +194,17 @@ The export includes water temperature in K at depths spanning 0–8 m (one buoy)
 These are candidates and evidence, not a frozen public catalogue. Source rows are asynchronous: timestamps span 2025-08-31 through 2026-10-17. The file has QARTOD values 2, 3 and 9 but no legend; retain raw flags and do not map them to meanings until the source definition is confirmed. Source IDs are not public virtual-buoy IDs. Confirm station/channel metadata and depth positive direction before selecting public channels or converting units. Current component convention must be checked before offering public current speed/direction.
 
 The schema proposal in `docs/data-api-schema.md` uses depth-aware channels and separate permanent/event observations so later Event Mode cannot contaminate the permanent stream.
+
+
+## 12. Full historical calibration analysis (VBUOY-002 planning)
+
+Terra analyzed cleaned historical exports for reference buoys 189, 191 and 267 on 2026-11-05. Derived evidence, hashes, robust ranges, persistence, rate-of-change checks and generator implications are recorded in `docs/generator-reference-analysis.md`.
+
+Implementation rules from that analysis:
+- use 267 primarily for physical/weather/current/wave dynamics;
+- use 189/191 primarily for water-quality distributions and persistence;
+- source data informs calibration only; do not replay/copy historical rows into production;
+- build normal mode as a persistent state process;
+- three buoys share regional forcing but use independent offsets/lags/noise;
+- do not assume strong turbidity/phycocyanin/wind correlations are universal across sites;
+- validate the normal generator with a deterministic accelerated 30-day run before live scheduling.

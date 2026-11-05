@@ -35,3 +35,12 @@ Suggested format:
 - **Live state:** Supabase project `dbsuryesimzatxhznurh` is `ACTIVE_HEALTHY` in `us-west-2`, PostgreSQL `17.11`, API `https://dbsuryesimzatxhznurh.supabase.co`; direct read-only SQL returned `postgres` at `2026-11-05 05:20:18.925459+00 UTC`, and `public` had zero tables. REST probe was repeated successfully from the authorized local environment; no objects were written. Publishable client key stays in ignored `.env.local` and is not recorded.
 - **Known issues:** MapLibre's minimal fallback style renders a blank water-colored canvas until VBUOY-002 selects a basemap; no exact buoy positions are represented. The Vite production build has a large-chunk advisory from bundling MapLibre. No npm audit was run.
 - **Next action:** Start VBUOY-002 planning; resolve reference station/channel metadata, QARTOD meanings, unit normalization, depth convention, current direction and buoy coordinates before generating observations.
+
+
+### 2026-11-05 — VBUOY-002 planning + full historical calibration review
+- **Reference data:** Terra analyzed the newly supplied cleaned historical files for buoys 189 (443,976 rows), 191 (469,737 rows) and 267 (31,303 rows). Raw files were not committed; SHA-256 identifiers and derived evidence are recorded in `docs/generator-reference-analysis.md`.
+- **Key evidence:** 267 is predominantly 10/20-minute synchronized physical/weather data and shows strong persistence, wind↔wave correlation ~0.62 and air↔surface-water temperature correlation ~0.84. 189/191 provide asynchronous water-quality histories with strongly persistent temperature/DO/phycocyanin/turbidity but site-specific cross-variable relationships.
+- **Decisions:** V1 public profile depths are virtual 1/4/8 m for temperature/current and 1/8 m for DO. Current direction is derived as a **TO** bearing from east/north velocity components. Public units are normalized for accessibility (°C, hPa, m/s, %, µg/L, NTU, m, s). CDOM/chlorophyll/nitrate/max-wave-height/humidity are omitted from V1.
+- **Generator direction:** Seeded stateful semi-empirical process; shared regional forcing + buoy-specific offsets/lags; 10-minute fixed step; 7-day synthetic backfill; no historical replay. A deterministic accelerated 30-day run is required before deployment.
+- **Live plan:** VBUOY-002 will apply/verify the relational schema, deploy a server-only advancement function, configure authenticated Supabase-native 10-minute scheduling and observe at least two real scheduler ticks before closure.
+- **Next action:** Luna executes the VBUOY-002 plan in `NOW.md`.

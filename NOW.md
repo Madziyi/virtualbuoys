@@ -1,80 +1,172 @@
 # Active Initiative
 
-**Initiative:** VBUOY-001 — Foundation
-**Status:** COMPLETE — FOUNDATION VERIFIED
-**Planner:** Terra
+**Initiative:** VBUOY-002 — Virtual buoy network  
+**Status:** PLANNED — SCHEMA + NORMAL GENERATOR + LIVE 10-MINUTE STREAM NEXT  
+**Planner:** Terra  
 **Implementation / verification:** Luna / Codex
 
 ## Objective
 
-Establish the technical foundation for Virtual Buoys without prematurely building the simulator.
+Create the first live synthetic buoy network: three clearly virtual western Lake Erie buoys, a deliberately small public sensor catalogue, a seeded correlated normal-mode generator, a permanent 10-minute observation stream, and enough synthetic history for later charts/API work.
 
-VBUOY-001 should leave the project with a working local frontend/backend connection, verified Supabase target, basic deployment path, and a deliberately defined public data/API schema ready for VBUOY-002.
+VBUOY-002 is the data-system milestone. It is **not** the polished public explorer and it does **not** implement Event Mode.
 
-## Current scope
+## Reference-data decision
 
-1. Sync and inspect the new repository.
-2. Verify the supplied Supabase project `dbsuryesimzatxhznurh` from Luna's local/authorized environment.
-3. Establish the initial React + TypeScript + Vite frontend if the repository is otherwise empty.
-4. Add MapLibre and the minimal app shell only if required for the foundation.
-5. Configure Supabase client access using environment variables; never commit secret values.
-6. Define the first database/API schema proposal for:
-   - virtual buoys;
-   - parameters/channels;
-   - permanent 10-minute observations;
-   - later isolated simulation sessions.
-7. Verify actual parameter names/units from the available real buoy reference datasets before freezing the public sensor schema.
-8. Establish initial local test/lint/type/build commands.
-9. Decide the hosting/deployment path before deploying.
-10. Update durable context with exact verified facts.
+Terra analyzed the three newly supplied cleaned historical exports for reference buoys 189, 191 and 267. The derived evidence is recorded in `docs/generator-reference-analysis.md`.
 
-## Explicit non-goals for VBUOY-001
+Key decision:
+- use 267 primarily to calibrate physical/weather persistence, profiles, currents and wind/wave behaviour;
+- use 189/191 primarily to calibrate water-quality distributions/persistence;
+- do not replay historical rows and do not copy raw historical observations into the public project;
+- do not force one universal turbidity/phycocyanin relationship across all three virtual buoys.
 
-- No full synthetic physics engine.
-- No HAB/turnover/storm implementation.
-- No production scheduler yet.
-- No public API launch yet.
-- No visual polish beyond a minimal shell.
-- No invented final sensor units/depths.
-- No Hardwater database linkage.
+## V1 public catalogue
 
-## Decisions already made
+### Profile channels
+- water temperature at 1 m, 4 m, 8 m — °C;
+- current speed at 1 m, 4 m, 8 m — m/s;
+- current direction at 1 m, 4 m, 8 m — degrees + compass, **TO** convention;
+- dissolved-oxygen saturation at 1 m and 8 m — %.
 
-- This is a completely separate public/synthetic product from Hardwater.
-- Three virtual buoys.
-- Permanent public stream updates every 10 minutes.
-- Event Mode is isolated and session-based, not historical replay.
-- Event speeds: 1×, 2×, 5×, 10×.
-- Initial event concepts: Normal, Storm, Turnover, HAB.
-- Public wind direction = degrees + compass label.
-- Meteorological wind direction uses FROM convention.
-- Public users should not have to combine U/V wind vectors.
-- OpenAPI playground is part of the product direction.
-- Keep V1 on React/TypeScript/Supabase unless evidence supports additional services.
+### Single-depth / surface channels
+- phycocyanin at 1 m — µg/L;
+- turbidity at 2 m — NTU;
+- air temperature — °C;
+- barometric pressure — hPa;
+- wind speed — m/s;
+- wind gust — m/s;
+- wind FROM direction — degrees + compass;
+- significant wave height — m;
+- wave mean period — s;
+- wave FROM direction — degrees + compass.
 
-## Verification expectations
+V1 deliberately omits CDOM, chlorophyll, nitrate, maximum wave height and humidity.
 
-Luna must run:
-- focused tests;
-- lint;
-- TypeScript;
-- production build;
-- `git diff --check`;
-- basic desktop + narrow browser UAT for the shell;
-- direct Supabase project verification before recording live facts.
+## Generator contract
 
-## Completion evidence
+Implement a seeded stateful generator with a fixed 10-minute simulation step.
 
-- Synced `main` at `2239de1d1ca94caa4501a6c171a41e40392638d7` before implementation.
-- Direct Supabase verification: project ACTIVE_HEALTHY, region us-west-2, PostgreSQL 17.11, API URL recorded in `LIVE-STATE.md`, and zero `public` tables at verification time.
-- Inspected the owner-supplied 53-row reference export before drafting the sensor/API schema. Candidate units/depths are captured with caveats; no final catalogue is frozen.
-- React/TypeScript/Vite shell, optional MapLibre style bootstrap, Supabase env client, test/lint/type/build baseline and Cloudflare Pages source-level deployment direction are implemented.
-- Browser UAT at `http://localhost:5175/`: 1440×900 desktop and 390×840 CSS-pixel narrow layout, no horizontal overflow, Explore anchor navigation, Supabase configured label, and MapLibre canvas/map-ready state. Focused tests (2/2), ESLint, TypeScript, production build, staged/unstaged `git diff --check`, and direct REST reachability probe pass; probe returns expected 404 because the proposed relation has not been created.
+The generator should have:
+1. a shared regional atmosphere/wave state;
+2. a slowly evolving water-column state with seasonal stratification;
+3. latent east/north current components, from which public speed + TO direction are derived;
+4. buoy-specific offsets/lags/noise so the three sites are related but not identical;
+5. persistent DO, phycocyanin and turbidity processes informed by the reference envelopes;
+6. deterministic seed support for tests and backfill;
+7. idempotent advancement so duplicate invocations do not create duplicate timestamps.
 
-## Explicit non-goals remain
+Normal mode is not an incident simulator. It should not deliberately create a major storm, turnover or HAB; those belong to VBUOY-005.
 
-- No simulator, permanent observation generator, Event Mode, public API implementation, schema migration or deployment.
+## Data/storage scope
+
+Review and then apply the proposed relational model from `docs/data-api-schema.md`, adding the minimum generator-state support needed for safe scheduled advancement.
+
+Expected live objects:
+- `buoys`;
+- `parameters`;
+- `channels`;
+- `observations`;
+- generator state/checkpoint table or equivalent;
+- RLS/policies for safe public reads and server-only writes.
+
+Do not create Event Mode tables unless a dependency truly requires them now.
+
+## Buoy geography
+
+Create three synthetic sites:
+- west;
+- central;
+- east;
+
+spread along the Essex County side of western Lake Erie, reasonably nearshore and visibly in-water.
+
+The exact coordinates must be selected deliberately and verified in the browser map. Names must clearly communicate that they are virtual/simulated sites; do not imply they are active government/research stations.
+
+## Initial history
+
+Backfill **7 days** at 10-minute cadence using the same generator and a fixed seed before starting the live scheduler. The history is synthetic and exists to make the later explorer immediately useful.
+
+Do not backfill from the historical CSV rows.
+
+## Scheduler direction
+
+Preferred architecture:
+- tested TypeScript simulation library;
+- authenticated/server-only Supabase Edge Function for advancing the permanent stream;
+- Supabase-native scheduling/cron every 10 minutes.
+
+Do not expose an unauthenticated write endpoint merely to make cron easy. Use the least-privilege supported scheduling/auth approach available in the current Supabase environment and document the exact live mechanism in `LIVE-STATE.md`.
+
+If the chosen Supabase scheduler/auth mechanism differs from this recommendation, record why before deployment.
+
+## Ordered implementation
+
+1. Sync current `main`; read all durable context and the generator analysis.
+2. Map only the existing foundation files and schema proposal.
+3. Finalize migration/schema including synthetic provenance and generator checkpointing.
+4. Seed three virtual buoy definitions and the frozen V1 parameter/channel catalogue.
+5. Select/visually verify three in-water Essex-side coordinates.
+6. Implement the deterministic TypeScript generator as a pure/testable library.
+7. Add an accelerated local simulation harness that can emit/inspect 30 simulated days without Supabase.
+8. Run the 30-day normal-mode acceptance suite; fix generator behaviour before live deployment.
+9. Apply the Supabase migration and directly verify schema/RLS/seed state.
+10. Backfill seven synthetic days through a bounded server-side path using the production generator.
+11. Deploy the advancement Edge Function.
+12. Configure the 10-minute schedule using an authenticated/server-only mechanism.
+13. Observe **at least two scheduler-generated ticks** separated by the real 10-minute cadence and verify all three buoys advance exactly once per tick.
+14. Add only the minimal map markers/status needed to visually verify the three sites/current timestamps; polished exploration remains VBUOY-003.
+15. Run focused tests, lint, typecheck, build, `git diff --check`, desktop/narrow browser UAT and live database verification.
+16. Update durable context and push the verified handoff.
+
+## Acceptance checks
+
+### Simulation
+- deterministic seeded rerun equality;
+- exact 10-minute timestamps;
+- no duplicate/NaN/Infinity values;
+- values stay inside documented safety bounds;
+- normal-mode rate changes broadly resemble the historical reference scale;
+- gust >= sustained wind except negligible rounding tolerance;
+- current direction ∈ [0, 360);
+- wind/wave 30-day correlation is positive and roughly 0.4–0.8;
+- buoy series share regional behaviour but are not identical;
+- no accidental sustained HAB-like phycocyanin or extreme turbidity in normal mode.
+
+### Live database
+- migrations are applied, not merely authored;
+- RLS enabled on exposed tables;
+- anonymous/publishable client can read only intended public data;
+- browser cannot write permanent observations;
+- three virtual buoys and expected channels exist;
+- seven-day history is continuous at 10-minute cadence;
+- production function advances idempotently;
+- at least two actual scheduled ticks are observed and recorded;
+- no raw reference CSV rows exist in the production tables.
+
+### UI/UAT
+- all three virtual markers are visibly in Lake Erie and not on land;
+- synthetic/educational status is visible;
+- latest timestamps/values update after scheduler advancement;
+- desktop and 390px-class narrow layout remain usable;
+- no new horizontal overflow.
+
+## Explicit non-goals
+
+- Event Mode/scenario controls;
+- public REST/OpenAPI launch;
+- polished charts/parameter education;
+- historical-event replay;
+- reproducing source QARTOD flags;
+- training or claiming a predictive lake model.
+
+## Risks
+
+- Source historical files are incomplete for some seasons/parameters, so avoid overfitting.
+- Three million-plus normalized channel observations per year is acceptable for V1 but should be monitored before long-term scale assumptions.
+- Supabase cron/Edge Function authentication must not weaken write security.
+- Map coordinates must be visually checked rather than inferred from labels alone.
 
 ## Next action
 
-Start VBUOY-002 planning from the inspected reference data. Resolve station/channel metadata, QARTOD flag meanings, parameter subset, unit normalization, depth convention, current direction and buoy coordinates before generating observations.
+Luna syncs `main`, executes this VBUOY-002 plan, and returns the standard handoff with local 30-day simulation evidence, live Supabase evidence, two real scheduler ticks, browser UAT and the final commit SHA.
