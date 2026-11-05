@@ -183,3 +183,13 @@ Checks should include:
 - UI/API agreement.
 
 Unit tests alone are insufficient for simulator acceptance.
+
+## 11. Reference-data findings (VBUOY-001)
+
+The owner supplied `latest_observations_by_buoy_rows.json` and it was inspected before drafting the data model. It contains 53 rows from reference buoy IDs 2, 4 and 6, with source channel/parameter IDs, source parameter names, depth, unit, value, measurement timestamp and a QARTOD flag.
+
+The export includes water temperature in K at depths spanning 0–8 m (one buoy) and 1.2/2 m (another); eastward and northward current velocity in m/s at 1–9 m; dissolved-oxygen saturation in % at 1, 2.2, 8.5 and 9.5 m; phycocyanin in ug/L at 1.2 m; chlorophyll in g/L at 1.2 m; turbidity in NTU; air temperature in K; pressure in Pa; wind direction in degrees; wind speed/gust in m/s; and wave height, period and direction channels.
+
+These are candidates and evidence, not a frozen public catalogue. Source rows are asynchronous: timestamps span 2025-08-31 through 2026-10-17. The file has QARTOD values 2, 3 and 9 but no legend; retain raw flags and do not map them to meanings until the source definition is confirmed. Source IDs are not public virtual-buoy IDs. Confirm station/channel metadata and depth positive direction before selecting public channels or converting units. Current component convention must be checked before offering public current speed/direction.
+
+The schema proposal in `docs/data-api-schema.md` uses depth-aware channels and separate permanent/event observations so later Event Mode cannot contaminate the permanent stream.

@@ -9,7 +9,7 @@ States:
 
 ## In progress
 
-- **VBUOY-001** `[in-progress]` — Foundation: repo/app shell, Supabase verification/client setup, development/deployment baseline, initial data/API schema planning.
+None.
 
 ## Ready
 
@@ -26,6 +26,7 @@ None currently. Supabase target verification is part of VBUOY-001.
 ## Done
 
 - Shared Terra/Luna durable-context bootstrap authored.
+- **VBUOY-001** `[done]` — Foundation: React/TypeScript/Vite shell, Supabase client and direct project verification, MapLibre setup, test/lint/type/build baseline, real-data-informed schema/API proposal, desktop and narrow UAT, and durable evidence.
 
 ## Deferred
 

@@ -17,16 +17,22 @@ Repository files do not prove deployment. Never store secret values.
 
 ### Target project
 
-- Project ID supplied by project owner: `dbsuryesimzatxhznurh`
-- Independent live verification by Terra: **not completed**
-- Reason: the current Supabase connector session did not have an eligible linked account for this project.
-- Required next verifier: Luna / Codex through the user's local/authorized Supabase environment.
+- Project ID: `dbsuryesimzatxhznurh`
+- Status: `ACTIVE_HEALTHY`
+- Region: `us-west-2`
+- Database: PostgreSQL 17.11 (`server_version` query returned `17.11`)
+- API URL: `https://dbsuryesimzatxhznurh.supabase.co`
+- Verified directly through the authorized Supabase connection on 2026-11-05; read-only SQL returned database `postgres` at `2026-11-05 05:20:18.925459+00 UTC`.
+- `public` schema had zero tables when inspected on 2026-11-05.
+- No migrations, tables, policies, functions, scheduled jobs or API objects were created by VBUOY-001.
+- A publishable client key is used only in ignored local `.env.local`; no key value is recorded or committed.
 
 Do not record schema, migrations, functions, URLs, keys or deployed resources here until directly verified.
 
 ## Frontend hosting
 
-- Not selected / not verified.
+- Cloudflare Pages selected as the static Vite hosting direction in source documentation.
+- No Pages project, domain, deployment or production environment has been configured or verified.
 
 ## Database schema
 

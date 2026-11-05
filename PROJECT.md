@@ -114,6 +114,10 @@ Target project ID supplied by the project owner:
 
 This identifier is configuration context, not proof of current live schema/deployment. See `LIVE-STATE.md`.
 
+## Hosting direction
+
+The selected static frontend path is Cloudflare Pages (Vite build command `npm ci && npm run build`, output directory `dist/`) with Supabase as a separate data/API service. This is a source-level decision only; hosting is not configured or deployed yet. See `docs/data-api-schema.md` for the initial data/API proposal.
+
 ## Product principles
 
 1. **Simple before sophisticated.** Students should understand the data without knowing oceanographic vector math.

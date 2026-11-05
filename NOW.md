@@ -1,8 +1,8 @@
 # Active Initiative
 
-**Initiative:** VBUOY-001 — Foundation  
-**Status:** CONTEXT BOOTSTRAPPED — LOCAL FOUNDATION IMPLEMENTATION NEXT  
-**Planner:** Terra  
+**Initiative:** VBUOY-001 — Foundation
+**Status:** COMPLETE — FOUNDATION VERIFIED
+**Planner:** Terra
 **Implementation / verification:** Luna / Codex
 
 ## Objective
@@ -63,10 +63,18 @@ Luna must run:
 - basic desktop + narrow browser UAT for the shell;
 - direct Supabase project verification before recording live facts.
 
-## Current blocker / verification boundary
+## Completion evidence
 
-The project owner supplied Supabase project ID `dbsuryesimzatxhznurh`, but Terra's current connector could not independently authenticate to that Supabase project. Therefore its existence/configuration must be verified by Luna before `LIVE-STATE.md` treats it as live fact.
+- Synced `main` at `2239de1d1ca94caa4501a6c171a41e40392638d7` before implementation.
+- Direct Supabase verification: project ACTIVE_HEALTHY, region us-west-2, PostgreSQL 17.11, API URL recorded in `LIVE-STATE.md`, and zero `public` tables at verification time.
+- Inspected the owner-supplied 53-row reference export before drafting the sensor/API schema. Candidate units/depths are captured with caveats; no final catalogue is frozen.
+- React/TypeScript/Vite shell, optional MapLibre style bootstrap, Supabase env client, test/lint/type/build baseline and Cloudflare Pages source-level deployment direction are implemented.
+- Browser UAT at `http://localhost:5175/`: 1440×900 desktop and 390×840 CSS-pixel narrow layout, no horizontal overflow, Explore anchor navigation, Supabase configured label, and MapLibre canvas/map-ready state. Focused tests (2/2), ESLint, TypeScript, production build, staged/unstaged `git diff --check`, and direct REST reachability probe pass; probe returns expected 404 because the proposed relation has not been created.
+
+## Explicit non-goals remain
+
+- No simulator, permanent observation generator, Event Mode, public API implementation, schema migration or deployment.
 
 ## Next action
 
-Luna syncs `main`, reads all durable context, verifies the Supabase target, performs the bounded VBUOY-001 foundation implementation, runs the required local/browser checks, updates context, and pushes a verified handoff.
+Start VBUOY-002 planning from the inspected reference data. Resolve station/channel metadata, QARTOD flag meanings, parameter subset, unit normalization, depth convention, current direction and buoy coordinates before generating observations.
