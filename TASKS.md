@@ -32,3 +32,5 @@ None currently.
 - Dedicated Python/FastAPI service — only introduce if later requirements justify it.
 - Historical event replay — intentionally excluded from current public concept.
 - Mini challenges/gamification — intentionally excluded from current scope.
+
+- VBUOY-003 implementation is partial: finish desktop and ~390 px mobile UAT, all-marker keyboard/focus checks, same-timestamp card/chart comparison, same-view CSV count verification, and pagination tests before closure. See NOW.md.

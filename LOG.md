@@ -74,3 +74,12 @@ Suggested format:
 - **Download:** VBUOY-003 adds deterministic CSV export for the currently selected buoy + parameter + range. Public REST/OpenAPI remains VBUOY-004.
 - **Security:** Explorer continues to use only publishable public reads. Generator/scheduler/write boundaries are not loosened for UI convenience.
 - **Next action:** Luna executes VBUOY-003 from `NOW.md` and `docs/explorer-ux.md`.
+
+
+### 2026-11-05 — VBUOY-003 partial implementation
+- **Changed:** Added selected map markers and external buoy controls, grouped readings, parameter education, lightweight SVG history with depth series and circular-safe direction points, paginated public reads, exact-value table, and current-view CSV. No database migration or security change.
+- **Verification:** `npm test` 3 files / 9 tests passed; lint, typecheck, build and diff check passed. Build retains MapLibre large-chunk warning (1,531.25 kB main chunk). Live public-access probe returned 69 latest rows across three buoys, rejected anonymous insert (42501), and unauthenticated function returned 401.
+- **UAT evidence:** Central live 24-hour temperature view showed 432 rows; 7-day view showed 3,024 rows. A downloaded 24-hour CSV had 432 data rows. Keyboard Enter selected West via external control and East via marker. Browser viewport override requested 390 px but reported 559 px; no horizontal overflow at 559 px. Complete desktop/~390px UAT, all controls, card/chart matching and repeat same-view download verification remain open.
+- **Live state:** Read-only checks only; no deployment, schema, configuration or generator changes.
+- **Known issues:** UAT and focused pagination coverage are incomplete; do not mark initiative done. Browser download automation stalled.
+- **Next action:** Finish the outstanding verification in NOW.md, fix any findings, then close VBUOY-003.

@@ -1,7 +1,7 @@
 # Active Initiative
 
 **Initiative:** VBUOY-003 — Public explorer  
-**Status:** PLANNED — INTERACTIVE MAP + BUOY DETAIL + CHARTS + CSV NEXT  
+**Status:** PARTIAL — IMPLEMENTED; UAT AND REVIEW REMAIN
 **Planner:** Terra  
 **Implementation / verification:** Luna / Codex
 
@@ -338,3 +338,8 @@ Desktop and ~390 px mobile:
 ## Next action
 
 Luna syncs `main`, implements this bounded VBUOY-003 public explorer, performs live-data desktop/mobile/accessibility UAT, updates durable context and pushes the standard handoff.
+
+
+## Implementation handoff — 2026-11-05
+
+Explorer implementation is present, but do not declare VBUOY-003 complete. The browser viewport override requested at 390 CSS px reported 559 CSS px, so the required ~390 px UAT and overflow verification remain open. Desktop-size UAT, all-marker keyboard/focus coverage, and explicit latest-card/chart timestamp agreement still need verification. A seven-day Central temperature view reported 3,024 observations; a separate 24-hour CSV contained 432 data rows, matching the previously displayed 432-row view, but the browser download automation stalled and the exact same-view check should be repeated. Add a focused pagination test with mocked multi-page responses. Recheck the complete acceptance criteria before closure.
