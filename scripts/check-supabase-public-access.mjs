@@ -23,6 +23,9 @@ const { error: writeError } = await supabase.from('observations').insert({
 })
 if (!writeError) throw new Error('Publishable client unexpectedly inserted a permanent observation')
 
+const { error: stateError } = await supabase.from('generator_state').select('*').limit(1)
+if (!stateError) throw new Error('Generator state unexpectedly accessible')
+
 const functionResponse = await fetch(`${url}/functions/v1/advance-virtual-buoys`, {
   method: 'POST',
   headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
@@ -33,6 +36,7 @@ if (functionResponse.status !== 401) throw new Error(`Publishable Edge Function 
 console.log(JSON.stringify({
   publicLatestRows: latest.length,
   publicBuoys: [...new Set(latest.map((row) => row.buoy_slug))].sort(),
+  generatorStateInaccessible: true,
   observationInsertRejected: true,
   insertErrorCode: writeError.code,
   unauthenticatedFunctionStatus: functionResponse.status,

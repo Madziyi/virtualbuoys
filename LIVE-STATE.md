@@ -65,4 +65,11 @@ Do not record schema, migrations, functions, URLs, keys or deployed resources he
 
 ## Known drift
 
-Cloudflare Pages remains unconfigured; API explorer/Event Mode remain future scope. No raw reference observations were loaded into production.
+Cloudflare Pages remains unconfigured; Event Mode remains future scope. No raw reference observations were loaded into production.
+
+
+### 2026-11-05 - VBUOY-004 public API
+
+- Supabase project `dbsuryesimzatxhznurh`: Edge Function `public-api`, version 2, ACTIVE, platform JWT verification disabled for intentional public read-only access. Base URL: `https://dbsuryesimzatxhznurh.supabase.co/functions/v1/public-api`. It uses the server-provided anonymous key for RLS-protected reads; no schema, scheduler or generator changes were made.
+- Live probes after deployment returned all three buoys, 16 parameters, 23 latest readings per buoy and Central temperature 432/1,296/3,024 readings for 24/72/168 hours, respectively. Direction conventions, CDOM metadata, structured invalid input errors, POST 405 and wildcard GET/OPTIONS CORS passed.
+- Anonymous observation insert rejected with 42501; generator state inaccessible; scheduler function without token returned 401.

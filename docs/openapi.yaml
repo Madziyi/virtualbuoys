@@ -1,0 +1,759 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Virtual Buoys public API",
+    "version": "1.0.0",
+    "description": "Synthetic educational data, updated every 10 minutes. Wind and wave directions are FROM; current direction is TO. CDOM is a relative synthetic signal, not an absolute concentration. GET/OPTIONS CORS allows any origin without credentials. Metadata caches for 3600 seconds; latest and history for 60 seconds; health for 30 seconds."
+  },
+  "servers": [
+    {
+      "url": "https://dbsuryesimzatxhznurh.supabase.co/functions/v1/public-api"
+    }
+  ],
+  "paths": {
+    "/v1/health": {
+      "get": {
+        "summary": "Service health",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Synthetic educational data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "service",
+                    "api_version",
+                    "data_source"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "const": "ok"
+                    },
+                    "service": {
+                      "type": "string"
+                    },
+                    "api_version": {
+                      "type": "string"
+                    },
+                    "data_source": {
+                      "type": "string",
+                      "const": "synthetic"
+                    }
+                  }
+                },
+                "example": {
+                  "status": "ok",
+                  "service": "virtual-buoys",
+                  "api_version": "v1",
+                  "data_source": "synthetic"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/buoys": {
+      "get": {
+        "summary": "List buoys",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Synthetic educational data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data_source",
+                    "buoys"
+                  ],
+                  "properties": {
+                    "data_source": {
+                      "type": "string",
+                      "const": "synthetic"
+                    },
+                    "buoys": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Buoy"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/buoys/{slug}": {
+      "get": {
+        "summary": "Buoy and available parameters",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "west",
+                "central",
+                "east"
+              ]
+            },
+            "description": "Virtual buoy slug"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Synthetic educational data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data_source",
+                    "buoy",
+                    "parameters"
+                  ],
+                  "properties": {
+                    "data_source": {
+                      "type": "string",
+                      "const": "synthetic"
+                    },
+                    "buoy": {
+                      "$ref": "#/components/schemas/Buoy"
+                    },
+                    "parameters": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Parameter"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/buoys/{slug}/latest": {
+      "get": {
+        "summary": "Latest readings",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "west",
+                "central",
+                "east"
+              ]
+            },
+            "description": "Virtual buoy slug"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Synthetic educational data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data_source",
+                    "buoy",
+                    "observations"
+                  ],
+                  "properties": {
+                    "data_source": {
+                      "type": "string",
+                      "const": "synthetic"
+                    },
+                    "buoy": {
+                      "$ref": "#/components/schemas/Buoy"
+                    },
+                    "observations": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/Observation"
+                          },
+                          {
+                            "type": "object",
+                            "required": [
+                              "parameter"
+                            ],
+                            "properties": {
+                              "parameter": {
+                                "$ref": "#/components/schemas/Parameter"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/buoys/{slug}/observations": {
+      "get": {
+        "summary": "Bounded history, oldest first",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "west",
+                "central",
+                "east"
+              ]
+            },
+            "description": "Virtual buoy slug"
+          },
+          {
+            "name": "parameter",
+            "in": "query",
+            "required": true,
+            "description": "Public parameter key",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hours",
+            "in": "query",
+            "required": false,
+            "description": "Positive hours; defaults to 24; maximum 168. Do not combine with start/end.",
+            "schema": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 168
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "description": "UTC ISO timestamp; requires end.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "description": "UTC ISO timestamp; requires start.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "depth_m",
+            "in": "query",
+            "required": false,
+            "description": "Available depth in metres.",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Synthetic educational data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data_source",
+                    "buoy",
+                    "parameter",
+                    "range",
+                    "observations"
+                  ],
+                  "properties": {
+                    "data_source": {
+                      "type": "string",
+                      "const": "synthetic"
+                    },
+                    "buoy": {
+                      "$ref": "#/components/schemas/Buoy"
+                    },
+                    "parameter": {
+                      "$ref": "#/components/schemas/Parameter"
+                    },
+                    "range": {
+                      "type": "object",
+                      "required": [
+                        "start",
+                        "end"
+                      ],
+                      "properties": {
+                        "start": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "end": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    },
+                    "observations": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Observation"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/parameters": {
+      "get": {
+        "summary": "Parameter catalogue",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Synthetic educational data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "data_source",
+                    "parameters"
+                  ],
+                  "properties": {
+                    "data_source": {
+                      "type": "string",
+                      "const": "synthetic"
+                    },
+                    "parameters": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Parameter"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "details"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "details": {
+                "type": [
+                  "object",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "Buoy": {
+        "type": "object",
+        "required": [
+          "slug",
+          "name",
+          "description",
+          "latitude",
+          "longitude"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number"
+          },
+          "longitude": {
+            "type": "number"
+          }
+        }
+      },
+      "Parameter": {
+        "type": "object",
+        "required": [
+          "key",
+          "name",
+          "description",
+          "unit",
+          "relative",
+          "direction_convention",
+          "depths_m"
+        ],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "relative": {
+            "type": "boolean"
+          },
+          "direction_convention": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "from",
+              "to",
+              null
+            ]
+          },
+          "depths_m": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        }
+      },
+      "Observation": {
+        "type": "object",
+        "required": [
+          "observed_at",
+          "depth_m",
+          "value",
+          "unit"
+        ],
+        "properties": {
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "depth_m": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "value": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "compass": {
+            "type": "string",
+            "description": "16-point compass label for direction readings."
+          },
+          "direction_convention": {
+            "type": "string",
+            "enum": [
+              "from",
+              "to"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

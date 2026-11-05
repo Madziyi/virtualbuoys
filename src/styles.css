@@ -151,3 +151,14 @@ table { width:100%; border-collapse:collapse; font-size:12px; text-align:left; }
 @media(max-width:720px) { .buoy-summaries { grid-template-columns:repeat(3,minmax(0,1fr)); } .buoy-summary { padding:12px 8px; border-right:1px solid #e6ebe6; border-bottom:0; } .buoy-summary strong { font-size:11px; } .reading-groups,.education { grid-template-columns:1fr; } .detail,.history { padding:32px 4px; } .history-controls label { width:100%; } .history-controls select { width:100%; } .reading span { text-align:left; } }
 
 @media (max-width: 720px) { .history-chart text { font-size: 28px; } }
+.api-section { border-top: 1px solid var(--line); padding: 48px 18px; min-width: 0; }
+.api-section h2 { font-size: clamp(28px, 4vw, 42px); }
+.api-section p { line-height: 1.6; }
+.api-base { overflow-wrap: anywhere; }
+.api-examples { display: grid; gap: 14px; margin: 24px 0; min-width: 0; }
+.api-examples > div { background: #eaf0eb; border-radius: 6px; min-width: 0; }
+.api-example-title { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px 0; }
+.api-examples pre { overflow-x: auto; padding: 0 16px 16px; font-size: 12px; line-height: 1.5; }
+.api-swagger { min-width: 0; overflow: hidden; margin-top: 24px; }
+.api-swagger .swagger-ui .wrapper { padding: 0; }
+.api-swagger .swagger-ui pre, .api-swagger .swagger-ui .highlight-code { overflow-x: auto; }

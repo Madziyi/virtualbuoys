@@ -1,3 +1,4 @@
+import ApiSection from './components/ApiSection'
 import { LakeMap } from './components/LakeMap'
 import { isSupabaseConfigured } from './lib/supabase'
 
@@ -48,7 +49,9 @@ function App() {
 
       <LakeMap />
 
-      <footer id="api">
+      <ApiSection />
+
+      <footer>
         <div className="footer-brand">A field guide for the curious.</div>
         <div className="footer-status"><span className={isSupabaseConfigured ? 'status-dot configured' : 'status-dot'} /> Supabase {isSupabaseConfigured ? 'configured' : 'environment not configured'}</div>
         <div className="footer-meta">All readings are synthetic · Not for operational use</div>

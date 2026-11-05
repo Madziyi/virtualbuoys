@@ -1,7 +1,7 @@
 # Active Initiative
 
 **Initiative:** VBUOY-004 — Public REST API + OpenAPI playground  
-**Status:** PLANNED — READ-ONLY API + DOCS/PLAYGROUND NEXT  
+**Status:** PARTIAL - FUNCTION DEPLOYED; MOBILE UAT AND REVIEW REMAIN
 **Planner:** Terra  
 **Implementation / verification:** Luna / Codex
 
@@ -342,3 +342,8 @@ Desktop and actual 390 px:
 ## Next action
 
 Luna syncs `main`, executes VBUOY-004, deploys/verifies the read-only API, performs desktop/mobile playground UAT, updates durable context and pushes the standard handoff.
+
+
+## Implementation handoff - 2026-11-05
+
+The public-api function and lazy Swagger playground are implemented. Live version 2 was deployed and probed. The initiative is **not closed**: true 390 CSS-pixel UAT remains outstanding because the available browser override reported innerWidth 582 when 390 was requested. Complete mobile layout/scroll and Try It Out verification at an effective 390 CSS pixels; inspect dependency audit and resolve remaining advisories; review the OpenAPI contract and tests for completeness. See LOG.md for evidence.

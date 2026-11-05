@@ -112,3 +112,15 @@ Suggested format:
 - **Security:** API is GET/OPTIONS only; no public write surface, no scheduler token, no generator state, no exposed privileged credentials. VBUOY-006 still owns advanced abuse/rate-limit hardening.
 - **UX:** Existing API navigation should lead to a useful playground with copyable curl, JavaScript and Python examples. Heavy Swagger/OpenAPI UI should be lazy-loaded if practical.
 - **Next action:** Luna executes VBUOY-004 from `NOW.md` and `docs/public-api-contract.md`.
+
+
+### 2026-11-05 — VBUOY-004 partial implementation
+- **Changed:** Implemented read-only public-api Edge Function and bounded per-channel pagination, structured errors, CORS and caching; checked-in OpenAPI 3.1; lazy Swagger UI and examples. No Event Mode or schema changes.
+- **Live:** Deployed public-api version 2, verify_jwt false for intentionally public access; function internally uses the anonymous key. All three buoys, 16 parameters, latest readings, direction conventions, CDOM, errors, OPTIONS and POST rejection passed. Central 24 h/72 h/168 h returned 432/1,296/3,024 ordered multi-depth readings.
+- **Security:** Publishable client observation insert rejected (42501), generator_state inaccessible, scheduler function without token 401.
+- **Verification:** 5 test files / 14 tests passed; lint, typecheck and build passed before subsequent dependency audit adjustments. Swagger is lazy loaded; build reports large chunks. Browser Try It Out health request returned 200; explorer loaded latest and 432 history rows.
+- **Open UAT:** Requested viewport 390x840 reported actual innerWidth 582/clientWidth 559; no claim of true 390 CSS-pixel UAT. Desktop and mobile full visual review and examples scrolling remain to be completed.
+- **Known issues:** Initial npm production audit reported 8 vulnerabilities (2 high) in Swagger/transitive dependencies and YAML; check follow-up audit and resolve. Contract tests do not yet comprehensively compare all live response schemas.
+- **Next action:** Complete effective 390 CSS-pixel UAT, resolve/check dependency advisories, complete contract and security review, then rerun final checks and update this handoff.
+
+- **Dependency follow-up:** `npm audit fix` removed high advisories; 14 total remain (2 low, 12 moderate), including Swagger transitive deepmerge/minimatch. Do not use force without review.

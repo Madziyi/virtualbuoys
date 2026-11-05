@@ -34,3 +34,6 @@ None currently.
 - Historical event replay — intentionally excluded from current public concept.
 - Mini challenges/gamification — intentionally excluded from current scope.
 
+
+
+- VBUOY-004 partial: public-api deployed; complete actual 390 CSS-pixel playground UAT and dependency audit follow-up before closure. See NOW.md and LOG.md.
