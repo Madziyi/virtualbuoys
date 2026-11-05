@@ -1,180 +1,340 @@
 # Active Initiative
 
-**Initiative:** VBUOY-002 — Virtual buoy network  
-**Status:** COMPLETE — VBUOY-002 implementation and live verification finished 2026-11-05
+**Initiative:** VBUOY-003 — Public explorer  
+**Status:** PLANNED — INTERACTIVE MAP + BUOY DETAIL + CHARTS + CSV NEXT  
 **Planner:** Terra  
 **Implementation / verification:** Luna / Codex
 
 ## Objective
 
-Create the first live synthetic buoy network: three clearly virtual western Lake Erie buoys, a deliberately small public sensor catalogue, a seeded correlated normal-mode generator, a permanent 10-minute observation stream, and enough synthetic history for later charts/API work.
+Turn the verified three-buoy synthetic network into the first genuinely useful public learning experience.
 
-VBUOY-002 is the data-system milestone. It is **not** the polished public explorer and it does **not** implement Event Mode.
+A visitor should be able to:
+1. see the three virtual buoys on western Lake Erie;
+2. select a buoy from the map or accessible controls;
+3. understand its latest measurements without needing scientific background;
+4. explore how one parameter changes over 24 h / 3 d / 7 d;
+5. understand depth profiles where relevant;
+6. download the currently explored data as CSV.
 
-## Reference-data decision
+VBUOY-003 is the public **exploration** milestone. It does not implement the public REST/OpenAPI developer API or Event Mode.
 
-Terra analyzed the three newly supplied cleaned historical exports for reference buoys 189, 191 and 267. The derived evidence is recorded in `docs/generator-reference-analysis.md`.
+## Product hierarchy
 
-Key decision:
-- use 267 primarily to calibrate physical/weather persistence, profiles, currents and wind/wave behaviour;
-- use 189/191 primarily to calibrate water-quality distributions/persistence;
-- do not replay historical rows and do not copy raw historical observations into the public project;
-- do not force one universal turbidity/phycocyanin relationship across all three virtual buoys.
+The explorer should follow this progression:
 
-## V1 public catalogue
+```text
+Map
+ ↓
+Choose West / Central / East virtual buoy
+ ↓
+Latest snapshot
+ ↓
+Weather / Water / Water quality / Waves & currents
+ ↓
+Choose a parameter
+ ↓
+24 h / 3 d / 7 d history
+ ↓
+Chart + depth series + explanation
+ ↓
+Download current view as CSV
+```
 
-### Profile channels
-- water temperature at 1 m, 4 m, 8 m — °C;
-- current speed at 1 m, 4 m, 8 m — m/s;
-- current direction at 1 m, 4 m, 8 m — degrees + compass, **TO** convention;
-- dissolved-oxygen saturation at 1 m and 8 m — %.
+The experience should remain clearly labelled **synthetic / educational** at all times.
 
-### Single-depth / surface channels
-- phycocyanin at 1 m — µg/L;
-- chlorophyll at 1 m — µg/L (explicitly converted from the source kg/m³ field);
-- CDOM at 1 m — relative/unitless source scale (`1`), clearly labelled as such;
-- turbidity at 2 m — NTU;
-- air temperature — °C;
-- barometric pressure — hPa;
-- wind speed — m/s;
-- wind gust — m/s;
-- wind FROM direction — degrees + compass;
-- significant wave height — m;
-- wave mean period — s;
-- wave FROM direction — degrees + compass.
+## Core interaction
 
-V1 deliberately omits nitrate, maximum wave height and humidity. CDOM and chlorophyll are included.
+### Map
 
-## Generator contract
+The map remains the visual anchor.
 
-Implement a seeded stateful generator with a fixed 10-minute simulation step.
+Requirements:
+- clicking a buoy marker selects it;
+- keyboard activation of each marker must select it;
+- buoy summary controls outside the map must provide an equivalent accessible selection path;
+- selected buoy gets a clearly distinct marker/card state;
+- selection should not require a page reload;
+- default selection: **Central Virtual Buoy** unless implementation evidence suggests a better default;
+- keep all three sites visible at normal desktop framing.
 
-The generator should have:
-1. a shared regional atmosphere/wave state;
-2. a slowly evolving water-column state with seasonal stratification;
-3. latent east/north current components, from which public speed + TO direction are derived;
-4. buoy-specific offsets/lags/noise so the three sites are related but not identical;
-5. persistent DO, phycocyanin, chlorophyll, CDOM and turbidity processes informed by the reference envelopes;
-6. deterministic seed support for tests and backfill;
-7. idempotent advancement so duplicate invocations do not create duplicate timestamps.
+The map is not intended to be a GIS application. Avoid unnecessary layers/controls.
 
-Normal mode is not an incident simulator. It should not deliberately create a major storm, turnover or HAB; those belong to VBUOY-005.
+### Buoy detail
 
-## Data/storage scope
+For the selected buoy show:
+- buoy name;
+- clearly visible `VIRTUAL · SYNTHETIC` label;
+- latest observation timestamp;
+- plain-language “Data updates every 10 minutes” statement;
+- location/coordinates at a secondary level;
+- latest parameter values grouped into understandable categories.
 
-Review and then apply the proposed relational model from `docs/data-api-schema.md`, adding the minimum generator-state support needed for safe scheduled advancement.
+Recommended groups:
 
-Expected live objects:
-- `buoys`;
-- `parameters`;
-- `channels`;
-- `observations`;
-- generator state/checkpoint table or equivalent;
-- RLS/policies for safe public reads and server-only writes.
+**Weather**
+- air temperature;
+- pressure;
+- wind speed;
+- gust;
+- wind direction.
 
-Do not create Event Mode tables unless a dependency truly requires them now.
+**Water quality**
+- dissolved oxygen saturation;
+- phycocyanin;
+- chlorophyll;
+- CDOM relative signal;
+- turbidity.
 
-## Buoy geography
+**Water column**
+- water temperature profile at 1 / 4 / 8 m.
 
-Create three synthetic sites:
-- west;
-- central;
-- east;
+**Waves & currents**
+- significant wave height;
+- mean wave period;
+- wave direction;
+- current speed/direction at 1 / 4 / 8 m.
 
-spread along the Essex County side of western Lake Erie, reasonably nearshore and visibly in-water.
+Do not surface all 23 channel values as one undifferentiated grid.
 
-The exact coordinates must be selected deliberately and verified in the browser map. Names must clearly communicate that they are virtual/simulated sites; do not imply they are active government/research stations.
+### Direction values
 
-## Initial history
+For wind, waves and currents show both:
+- numeric degrees;
+- compass label.
 
-Backfill **7 days** at 10-minute cadence using the same generator and a fixed seed before starting the live scheduler. The history is synthetic and exists to make the later explorer immediately useful.
+Examples:
+- `69° ENE`
+- `245° WSW`
 
-Do not backfill from the historical CSV rows.
+Use existing conventions:
+- wind/waves: FROM;
+- currents: TO.
 
-## Scheduler direction
+Provide a short explanation of the convention when the user explores one of these parameters.
 
-Preferred architecture:
-- tested TypeScript simulation library;
-- authenticated/server-only Supabase Edge Function for advancing the permanent stream;
-- Supabase-native scheduling/cron every 10 minutes.
+### Parameter education
 
-Do not expose an unauthenticated write endpoint merely to make cron easy. Use the least-privilege supported scheduling/auth approach available in the current Supabase environment and document the exact live mechanism in `LIVE-STATE.md`.
+Every parameter should have:
+- display name;
+- current value/unit;
+- one concise “what it measures” explanation;
+- one concise “why it matters” explanation;
+- depth when applicable;
+- relative/non-absolute warning for CDOM.
 
-If the chosen Supabase scheduler/auth mechanism differs from this recommendation, record why before deployment.
+Do not overstate simulation output as a real environmental diagnosis.
+
+For CDOM, explicitly explain that this V1 value is a **relative synthetic signal**, not an absolute concentration.
+
+## Historical explorer
+
+### Parameter selector
+
+Let the user select one public parameter at a time.
+
+For multi-depth parameters:
+- display all relevant depths on the same chart;
+- use consistent depth labels (1 m / 4 m / 8 m; DO 1 m / 8 m);
+- allow the legend to identify/toggle depths if straightforward.
+
+For direction parameters, avoid misleading ordinary line interpolation across 359°→1°. Either:
+- use a circular-aware representation; or
+- show points/stepped values with compass labels rather than a conventional continuous line.
+
+Do not silently draw a false 358-degree swing.
+
+### Time ranges
+
+Initial ranges:
+- 24 hours;
+- 3 days;
+- 7 days.
+
+Use the existing synthetic observation history. Do not create a second history store.
+
+The query layer must handle Supabase response limits safely. Implement explicit pagination/batching rather than assuming one query returns all 7-day rows.
+
+### Chart implementation
+
+Prefer a lightweight implementation:
+- SVG/Canvas built in-project, or a small dependency;
+- do not add a large charting bundle without justification, especially because MapLibre already triggers a bundle advisory.
+
+Chart requirements:
+- responsive;
+- readable axis labels;
+- units;
+- timestamps;
+- hover/focus values or another accessible exact-value mechanism;
+- empty/loading/error states;
+- no false smoothing that invents unobserved values.
+
+A simple table/list fallback for exact values is acceptable and useful for accessibility.
+
+## CSV download
+
+Provide **Download CSV** for the currently selected:
+- buoy;
+- parameter;
+- time range.
+
+CSV should include enough context to be independently useful:
+
+```text
+buoy_slug
+buoy_name
+parameter_key
+parameter_name
+depth_m
+value
+unit
+direction_convention
+observed_at
+data_source
+```
+
+For direction parameters, optionally include the derived compass label as an additional column.
+
+File names should be predictable, for example:
+
+`central-water-temperature-7d.csv`
+
+Do not attempt a whole-database bulk export in VBUOY-003.
+
+## Data-access architecture
+
+VBUOY-003 should use the existing public Supabase read boundary. Do not add privileged browser credentials.
+
+Create a small frontend data module rather than leaving database queries embedded in components.
+
+Expected functions conceptually:
+- fetch buoy definitions;
+- fetch latest readings;
+- fetch parameter catalogue;
+- fetch observations for selected buoy/parameter/range with pagination;
+- convert degrees to 16-point compass labels;
+- generate/download CSV.
+
+If the existing schema cannot support a clean/efficient public query, a small read-only security-invoker view/RPC migration is acceptable, but only if justified. Do not modify generator/write security for explorer convenience.
+
+## Refresh behaviour
+
+The source stream advances every 10 minutes.
+
+The explorer may poll more frequently to notice new data, but UI language must say **data updates every 10 minutes**, not imply that new measurements are produced every minute.
+
+When a new timestamp arrives:
+- latest cards should update without page reload;
+- if the user is viewing a range containing “now”, the chart should refresh without losing their selection.
+
+## Visual direction
+
+Preserve the existing visual language:
+- calm Great Lakes palette;
+- editorial/educational rather than utility-dashboard feel;
+- generous whitespace;
+- restrained use of cards;
+- mobile-first readability.
+
+The map + data explorer should become the primary functional content below the existing hero.
+
+Do not copy Hardwater's operational dashboard styling literally; this is a public educational product.
+
+See `docs/explorer-ux.md` for the intended information hierarchy.
+
+## Performance
+
+The existing MapLibre bundle advisory is known.
+
+VBUOY-003 should avoid materially worsening it. If practical without destabilizing the app:
+- lazy-load the MapLibre-heavy explorer/map chunk;
+- keep chart code lightweight.
+
+Do not make bundle optimization a blocker unless the new explorer causes a meaningful regression.
 
 ## Ordered implementation
 
-1. Sync current `main`; read all durable context and the generator analysis.
-2. Map only the existing foundation files and schema proposal.
-3. Finalize migration/schema including synthetic provenance and generator checkpointing.
-4. Seed three virtual buoy definitions and the frozen V1 parameter/channel catalogue.
-5. Select/visually verify three in-water Essex-side coordinates.
-6. Implement the deterministic TypeScript generator as a pure/testable library.
-7. Add an accelerated local simulation harness that can emit/inspect 30 simulated days without Supabase.
-8. Run the 30-day normal-mode acceptance suite; fix generator behaviour before live deployment.
-9. Apply the Supabase migration and directly verify schema/RLS/seed state.
-10. Backfill seven synthetic days through a bounded server-side path using the production generator.
-11. Deploy the advancement Edge Function.
-12. Configure the 10-minute schedule using an authenticated/server-only mechanism.
-13. Observe **at least two scheduler-generated ticks** separated by the real 10-minute cadence and verify all three buoys advance exactly once per tick.
-14. Add only the minimal map markers/status needed to visually verify the three sites/current timestamps; polished exploration remains VBUOY-003.
-15. Run focused tests, lint, typecheck, build, `git diff --check`, desktop/narrow browser UAT and live database verification.
-16. Update durable context and push the verified handoff.
+1. Sync current `main` and read all durable context.
+2. Review the VBUOY-002 live schema/read policies and current `LakeMap` implementation.
+3. Build typed public-data access helpers with explicit pagination and tests.
+4. Refactor map selection into React state; support marker + keyboard + external buoy-card selection.
+5. Implement selected-buoy overview with grouped latest measurements.
+6. Add parameter educational metadata and direction-compass formatting.
+7. Implement the 24 h / 3 d / 7 d historical query + chart.
+8. Handle multi-depth series and circular direction parameters correctly.
+9. Implement CSV export for current buoy/parameter/range.
+10. Add loading, empty and error states.
+11. Verify latest data refresh after at least one live 10-minute scheduler advancement if timing permits; if not, safely trigger/read a verified advancement only if consistent with the existing server-only contract.
+12. Run focused tests, lint, typecheck, build and `git diff --check`.
+13. Perform desktop and 390px-class browser UAT using live synthetic data.
+14. Update durable context and push the verified handoff.
 
-## Acceptance checks
+## Acceptance criteria
 
-### Simulation
-- deterministic seeded rerun equality;
-- exact 10-minute timestamps;
-- no duplicate/NaN/Infinity values;
-- values stay inside documented safety bounds;
-- normal-mode rate changes broadly resemble the historical reference scale;
-- gust >= sustained wind except negligible rounding tolerance;
-- current direction ∈ [0, 360);
-- wind/wave 30-day correlation is positive and roughly 0.4–0.8;
-- buoy series share regional behaviour but are not identical;
-- no accidental sustained HAB-like phycocyanin/chlorophyll behaviour or extreme turbidity/CDOM excursions in normal mode.
+### Map / selection
+- all three buoys visible;
+- clicking/keyboard-selecting a marker changes the active buoy;
+- external buoy selector/card provides equivalent selection;
+- active state is obvious;
+- no accidental map-only accessibility dependency.
 
-### Live database
-- migrations are applied, not merely authored;
-- RLS enabled on exposed tables;
-- anonymous/publishable client can read only intended public data;
-- browser cannot write permanent observations;
-- three virtual buoys and expected channels exist;
-- seven-day history is continuous at 10-minute cadence;
-- production function advances idempotently;
-- at least two actual scheduled ticks are observed and recorded;
-- no raw reference CSV rows exist in the production tables.
+### Latest snapshot
+- latest values come from live synthetic Supabase data;
+- grouped presentation is understandable;
+- all V1 parameters are discoverable;
+- wind/wave/current directions show degrees + compass;
+- CDOM is clearly marked relative;
+- timestamp and 10-minute update cadence are clear.
 
-### UI/UAT
-- all three virtual markers are visibly in Lake Erie and not on land;
-- synthetic/educational status is visible;
-- latest timestamps/values update after scheduler advancement;
-- desktop and 390px-class narrow layout remain usable;
-- no new horizontal overflow.
+### History
+- 24 h / 3 d / 7 d ranges work;
+- paginated querying returns complete expected data;
+- depth-aware parameters show the expected depth series;
+- direction charts do not create false 359°→0° interpolation;
+- changing buoy/parameter/range updates correctly;
+- loading/error/empty states are usable.
+
+### CSV
+- downloads the current selection only;
+- row count matches the fetched current-view dataset;
+- timestamps are UTC ISO 8601;
+- units/depth/data-source metadata are present;
+- filename is deterministic;
+- no privileged or internal IDs/secrets leak.
+
+### Security
+- browser still uses only the publishable Supabase key;
+- browser writes remain rejected;
+- generator state and scheduler token remain inaccessible;
+- no write/security regression.
+
+### UAT
+Desktop and ~390 px mobile:
+- map and explorer usable;
+- no horizontal overflow;
+- charts remain legible;
+- controls have usable touch targets;
+- keyboard selection/focus works;
+- synthetic status remains visible;
+- latest data and historical chart agree for overlapping timestamps.
 
 ## Explicit non-goals
 
-- Event Mode/scenario controls;
-- public REST/OpenAPI launch;
-- polished charts/parameter education;
-- historical-event replay;
-- reproducing source QARTOD flags;
-- training or claiming a predictive lake model.
+- public REST/OpenAPI/Swagger developer API (VBUOY-004);
+- Event Mode / Normal-Storm-Turnover-HAB controls (VBUOY-005);
+- user accounts;
+- historical real-buoy replay;
+- operational warnings/alerts;
+- claiming that the simulated lake state is predictive.
 
-## Risks
+## Known risks
 
-- Source historical files are incomplete for some seasons/parameters, so avoid overfitting.
-- Three million-plus normalized channel observations per year is acceptable for V1 but should be monitored before long-term scale assumptions.
-- Supabase cron/Edge Function authentication must not weaken write security.
-- Map coordinates must be visually checked rather than inferred from labels alone.
-
-## Current evidence (2026-11-05)
-
-Implementation is on local `main` synced to upstream `68dc5bc3051c7918af9807c7c1610653587fd6c9`. The live schema, V1 catalogue and generator are implemented; seven days of synthetic observations were backfilled. Two real scheduled runs succeeded at `2026-11-05 11:40:00 UTC` and `11:50:00 UTC`, each returning HTTP 200 and committing exactly 69 new rows.
-
-The fixed-seed 30-day simulator and acceptance tests pass. Exact run metrics are in `docs/generator-implementation.md` and `LOG.md`; browser checks at `http://localhost:5175/` confirm all three markers in Lake Erie, synthetic status and a responsive 390px-class layout. `LIVE-STATE.md` records the two scheduled runs and direct security/access probes.
+- Direct observation history can exceed Supabase's default per-request row limits; pagination is mandatory.
+- Direction variables require circular handling.
+- The existing MapLibre bundle is already large.
+- Public-read tables should remain intentionally narrow in exposure as the UI grows.
 
 ## Next action
 
-Next initiative: VBUOY-003 public explorer.
+Luna syncs `main`, implements this bounded VBUOY-003 public explorer, performs live-data desktop/mobile/accessibility UAT, updates durable context and pushes the standard handoff.

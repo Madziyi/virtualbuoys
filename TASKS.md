@@ -9,10 +9,10 @@ States:
 
 ## In progress
 
+- **VBUOY-003** `[in-progress]` — Public explorer: interactive buoy selection, grouped live readings, parameter education, 24h/3d/7d history charts, depth profiles and current-view CSV download.
 
 ## Ready
 
-- **VBUOY-003** `[ready]` — Public explorer: map, buoy detail, parameter explanations, depth profiles, charts, CSV download.
 - **VBUOY-004** `[ready]` — Public REST API + OpenAPI/Swagger playground + Python/JS/curl examples.
 - **VBUOY-005** `[ready]` — Event Mode: isolated Normal/Storm/Turnover/HAB simulations at 1×/2×/5×/10×.
 - **VBUOY-006** `[ready]` — Hardening: accelerated multi-day simulator tests, normal-cadence soak testing, API abuse controls, responsive/accessibility UAT.

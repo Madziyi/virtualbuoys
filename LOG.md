@@ -64,3 +64,13 @@ Suggested format:
 - **Browser UAT:** Local `http://localhost:5175/` showed MapLibre ready and West/Central/East markers in Lake Erie, synthetic status, latest data, and automatic one-minute refresh from 11:40 to 11:50 UTC. Desktop map/cards fit without overflow. At the tested 390px-class narrow viewport, map and cards stacked vertically, all three markers remained available, and there was no horizontal overflow. Viewport restored after UAT.
 - **Known limitations:** Generator is a semi-empirical educational process, not a validated/predictive lake model. Map tiles depend on OpenStreetMap network access. Build still emits the large MapLibre chunk advisory. Cloudflare Pages, polished explorer, public API playground, and Event Mode are future work.
 - **Next action:** VBUOY-003 public explorer.
+
+
+### 2026-11-05 — VBUOY-002 review + VBUOY-003 public explorer planning
+- **Review:** Terra resynced GitHub at `e671927c27a08e5c58a27056366faf59c8544088`, reviewed the VBUOY-002 implementation commit and durable live-state evidence. The handoff is accepted: generator, schema, seven-day history, RLS/write boundary, secured cron/function and two real ten-minute ticks are documented and verified by Luna.
+- **VBUOY-003 decision:** The next milestone is the public explorer, not the API or Event Mode. The map becomes selectable; selected-buoy readings are grouped into Weather, Water quality, Water column, and Waves & currents rather than exposed as one 23-channel wall.
+- **History UX:** One parameter at a time with 24 h / 3 d / 7 d ranges, complete paginated reads, multi-depth series where applicable, circular-safe direction visualization and exact-value accessibility.
+- **Education:** Every parameter gets concise “what it measures” and “why look at it” copy. Wind/waves display FROM direction, currents display TO direction, and CDOM remains explicitly relative.
+- **Download:** VBUOY-003 adds deterministic CSV export for the currently selected buoy + parameter + range. Public REST/OpenAPI remains VBUOY-004.
+- **Security:** Explorer continues to use only publishable public reads. Generator/scheduler/write boundaries are not loosened for UI convenience.
+- **Next action:** Luna executes VBUOY-003 from `NOW.md` and `docs/explorer-ux.md`.
