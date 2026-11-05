@@ -61,7 +61,7 @@ Do not record schema, migrations, functions, URLs, keys or deployed resources he
 
 ## Secrets
 
-- Vault contains secret name `vbuoy_scheduler_token`; the value is never recorded. A local working copy is in ignored `.env.scheduler.local` only while final verification is in progress; it must be removed before commit/handoff.
+- Vault contains secret name `vbuoy_scheduler_token`; the value is never recorded. No local scheduler-token value is recorded in repository context.
 
 ## Known drift
 
