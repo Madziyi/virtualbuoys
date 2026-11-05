@@ -65,8 +65,20 @@ h1 em { font-family: 'Playfair Display', serif; color: var(--teal); letter-spaci
 .map-heading h2 { font-size: 19px; }
 .map-status { color: #788987; font: 10px 'DM Mono', monospace; display: flex; align-items: center; gap: 7px; }
 .map-status i { width: 6px; height: 6px; border-radius: 50%; background: #d8a451; }
+.map-status i.ready { background: #62b87c; }
+.map-status-text { color: #748582; margin: 6px 0 0; font-size: 11px; }
 .map-frame { width: 100%; height: 280px; background: #d9edf0; }
 .map-caption { margin: 0; padding: 12px 25px; border-top: 1px solid #e6ebe6; font-size: 10px; color: #788987; }
+.virtual-buoy-marker { width: 30px; height: 30px; border: 2px solid #fff; border-radius: 50% 50% 50% 2px; transform: rotate(-45deg); background: #247f79; box-shadow: 0 2px 8px #142f3655; color: #fff; font: 700 12px 'DM Mono', monospace; cursor: pointer; }
+.virtual-buoy-marker::first-letter { transform: rotate(45deg); }
+.buoy-summaries { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid #e6ebe6; }
+.buoy-summary { min-width: 0; padding: 16px 19px 18px; border-right: 1px solid #e6ebe6; }
+.buoy-summary:last-child { border-right: 0; }
+.buoy-summary-tag { color: var(--teal); font: 500 8px 'DM Mono', monospace; letter-spacing: .7px; }
+.buoy-summary h3 { margin: 6px 0 3px; color: var(--ink); font-size: 14px; font-weight: 600; }
+.buoy-summary time { color: #718080; font: 9px 'DM Mono', monospace; }
+.sample-values { display: grid; gap: 4px; margin-top: 10px; color: #657a78; font-size: 10px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 footer { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 27px 6px 32px; color: #81918e; font-size: 10px; }
 .footer-brand { color: #436263; font-family: 'Playfair Display', serif; font-style: italic; font-size: 14px; }
 .footer-status { display: flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; }
@@ -97,6 +109,9 @@ footer { display: flex; align-items: center; justify-content: space-between; gap
   .map-heading .eyebrow { font-size: 8px; letter-spacing: .9px; }
   .map-frame { height: 230px; }
   .map-caption { padding: 11px 16px; font-size: 9px; }
+  .buoy-summaries { grid-template-columns: 1fr; }
+  .buoy-summary { border-right: 0; border-bottom: 1px solid #e6ebe6; padding: 14px 16px; }
+  .buoy-summary:last-child { border-bottom: 0; }
   footer { align-items: flex-start; flex-wrap: wrap; padding: 23px 2px 27px; }
   .footer-brand { width: 100%; }
   .footer-meta { text-align: left; }

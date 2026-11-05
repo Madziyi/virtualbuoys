@@ -9,7 +9,6 @@ States:
 
 ## In progress
 
-- **VBUOY-002** `[in-progress]` — Three virtual western Lake Erie buoys, frozen V1 public sensor catalogue, seeded correlated normal generator, 7-day synthetic backfill, live 10-minute scheduled observations and verification.
 
 ## Ready
 
@@ -20,12 +19,13 @@ States:
 
 ## Blocked
 
-None currently. Supabase target verification is part of VBUOY-001.
+None currently.
 
 ## Done
 
 - Shared Terra/Luna durable-context bootstrap authored.
 - **VBUOY-001** `[done]` — Foundation: React/TypeScript/Vite shell, Supabase client and direct project verification, MapLibre setup, test/lint/type/build baseline, real-data-informed schema/API proposal, desktop and narrow UAT, and durable evidence.
+- **VBUOY-002** `[done]` — Three synthetic western Lake Erie buoys, evidence-informed 16-parameter/69-channel V1 schema, seeded correlated normal generator, seven-day backfill, secured Supabase cron/Edge Function stream, two directly verified scheduled ticks, map/status preview, 30-day acceptance and desktop/narrow UAT. Commit/push SHA is recorded in the final handoff and project log.
 
 ## Deferred
 

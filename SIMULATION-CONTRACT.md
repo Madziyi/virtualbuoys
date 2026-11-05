@@ -17,7 +17,7 @@ The UI and API must clearly identify the product as simulated/educational data.
 - Exactly three initial virtual buoys.
 - Western Lake Erie, Essex County side.
 - Reasonably nearshore but spatially separated.
-- Exact coordinates are a deliberate VBUOY-002 decision.
+- Implemented VBUOY-002 coordinates: west `42.025, -82.960`; central `41.985, -82.720`; east `41.930, -82.490`. All three were visually verified in Lake Erie at `http://localhost:5175/`.
 - Permanent observations publish every 10 minutes.
 - Permanent stream continues independently of Event Mode.
 
@@ -193,9 +193,9 @@ The owner supplied `latest_observations_by_buoy_rows.json` and it was inspected 
 
 The export includes water temperature in K at depths spanning 0–8 m (one buoy) and 1.2/2 m (another); eastward and northward current velocity in m/s at 1–9 m; dissolved-oxygen saturation in % at 1, 2.2, 8.5 and 9.5 m; phycocyanin in ug/L at 1.2 m; chlorophyll in g/L at 1.2 m; turbidity in NTU; air temperature in K; pressure in Pa; wind direction in degrees; wind speed/gust in m/s; and wave height, period and direction channels.
 
-These are candidates and evidence, not a frozen public catalogue. Source rows are asynchronous: timestamps span 2025-08-31 through 2026-10-17. The file has QARTOD values 2, 3 and 9 but no legend; retain raw flags and do not map them to meanings until the source definition is confirmed. Source IDs are not public virtual-buoy IDs. Confirm station/channel metadata and depth positive direction before selecting public channels or converting units. Current component convention must be checked before offering public current speed/direction.
+This was the initial VBUOY-001 candidate inventory. VBUOY-002 subsequently reviewed the cleaned historical reference exports for buoys 189, 191 and 267; the resulting frozen V1 public catalogue, depths, units, and derived current convention are recorded in §9 and the reference analysis below. Source IDs and raw quality flags are not copied into synthetic production observations.
 
-The schema proposal in `docs/data-api-schema.md` uses depth-aware channels and separate permanent/event observations so later Event Mode cannot contaminate the permanent stream.
+The implemented permanent schema in `docs/data-api-schema.md` uses depth-aware channels. Event/session observation storage remains later scope and must remain isolated from the permanent stream.
 
 
 ## 12. Full historical calibration analysis (VBUOY-002 planning)

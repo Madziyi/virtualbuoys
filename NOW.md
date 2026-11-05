@@ -1,7 +1,7 @@
 # Active Initiative
 
 **Initiative:** VBUOY-002 — Virtual buoy network  
-**Status:** PLANNED — SCHEMA + NORMAL GENERATOR + LIVE 10-MINUTE STREAM NEXT  
+**Status:** COMPLETE — VBUOY-002 implementation and live verification finished 2026-11-05
 **Planner:** Terra  
 **Implementation / verification:** Luna / Codex
 
@@ -169,6 +169,12 @@ If the chosen Supabase scheduler/auth mechanism differs from this recommendation
 - Supabase cron/Edge Function authentication must not weaken write security.
 - Map coordinates must be visually checked rather than inferred from labels alone.
 
+## Current evidence (2026-11-05)
+
+Implementation is on local `main` synced to upstream `68dc5bc3051c7918af9807c7c1610653587fd6c9`. The live schema, V1 catalogue and generator are implemented; seven days of synthetic observations were backfilled. Two real scheduled runs succeeded at `2026-11-05 11:40:00 UTC` and `11:50:00 UTC`, each returning HTTP 200 and committing exactly 69 new rows.
+
+The fixed-seed 30-day simulator and acceptance tests pass. Exact run metrics are in `docs/generator-implementation.md` and `LOG.md`; browser checks at `http://localhost:5175/` confirm all three markers in Lake Erie, synthetic status and a responsive 390px-class layout. `LIVE-STATE.md` records the two scheduled runs and direct security/access probes.
+
 ## Next action
 
-Luna syncs `main`, executes this VBUOY-002 plan, and returns the standard handoff with local 30-day simulation evidence, live Supabase evidence, two real scheduler ticks, browser UAT and the final commit SHA.
+Commit and push the verified VBUOY-002 handoff to `main`. Next: VBUOY-003 public explorer.

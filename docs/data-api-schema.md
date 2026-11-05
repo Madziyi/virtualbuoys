@@ -1,14 +1,14 @@
-# Initial data and API schema proposal
+# Data schema and API direction
 
-**Status: proposal for VBUOY-002 review. No database objects have been created.**
+**Status: VBUOY-002 implemented in Supabase project `dbsuryesimzatxhznurh`; direct verification evidence is recorded in `LIVE-STATE.md`.** The permanent 10-minute synthetic stream is implemented. This document describes the deployed V1 subset and its intended access boundary. Event/session storage and API routes remain future scope.
 
-This model supports the permanent 10-minute synthetic stream while keeping later event runs isolated. Sensor names, canonical units, depth selection, buoy identifiers and current-direction convention remain open until the source channels and station metadata are reviewed together.
+The deployed V1 model supports the permanent 10-minute synthetic stream. The catalogue, units, virtual depths and current direction convention are frozen for V1 using the reference data described below. Event/session observations remain a later, separately isolated design.
 
 ## Reference evidence reviewed
 
 The owner supplied `latest_observations_by_buoy_rows.json` for this foundation pass. It contains 53 channel rows across reference buoy IDs 2, 4 and 6. Each row includes `channel_id`, `parameter_id`, `standard_name`, `depth`, `unit`, `value`, `measured_at` and `qartod_flag`.
 
-Observed candidates (source spellings and units preserved; none are frozen for the public API):
+Source observations (source spellings and units preserved) informed the V1 public catalogue described in `SIMULATION-CONTRACT.md`:
 
 | Source parameter | Units in supplied rows | Depth evidence in supplied rows | Notes |
 | --- | --- | --- | --- |
@@ -34,7 +34,7 @@ This evidence supports a depth-aware channel registry and observation model. VBU
 ## Proposed relational model
 
 - `buoys`: virtual buoy identity and metadata (`id`, stable public `slug`, `name`, `description`, `latitude`, `longitude`, `is_active`). Coordinates are deliberate VBUOY-002 decisions.
-- `parameters`: canonical measurement concept and presentation metadata (`id`, provisional `key`, `display_name`, `standard_name`, `description`, canonical unit code/symbol and unit provenance). Do not seed a frozen catalogue in VBUOY-001.
+- `parameters`: canonical measurement concept and presentation metadata (`id`, stable V1 key, `display_name`, `standard_name`, `description`, canonical unit symbol and unit provenance). The live V1 catalogue has 16 parameters.
 - `channels`: a buoy's configured parameter/depth channel (`id`, `buoy_id`, `parameter_id`, nullable `depth_m`, optional source metadata). Surface/atmospheric channels may have no depth. Channel IDs are internal UUIDs.
 - `observations`: permanent synthetic values (`channel_id`, `observed_at timestamptz`, `value double precision`, nullable source-compatible `quality_flag`, `created_at`). Unique key `(channel_id, observed_at)`; index `(channel_id, observed_at desc)`. Mark synthetic provenance in API responses; no real reference rows are copied into production.
 - `simulation_sessions`: later event-run metadata (`id`, scenario, speed multiplier, wall-clock creation/expiry, simulation-clock start, status). Ownership and abuse controls remain later design work.
@@ -42,9 +42,9 @@ This evidence supports a depth-aware channel registry and observation model. VBU
 
 All timestamps use `timestamptz` and are returned as UTC ISO 8601. Depth is numeric metres, positive downward, only after the source depth convention is verified. `parameters` records one canonical unit per channel definition; any source-unit conversion must be explicit and tested before data enters the synthetic API.
 
-### Access boundary proposal
+### Deployed access boundary
 
-The frontend uses only the Supabase publishable key. Public reads should be exposed through reviewed views or Edge Functions after tables and policies exist. Enable RLS for every exposed table, grant only required `SELECT` access, and keep all write credentials server-side. Session observations must be scoped to their session. No schema, grants, policies, functions or scheduled jobs are applied by this proposal.
+The frontend uses only the Supabase publishable key. RLS is enabled on all five public tables. Anonymous/authenticated clients can select the intended synthetic buoy, parameter, channel and observation rows; browser inserts are denied. `latest_observations` is a security-invoker view. Generator state and the transactional `commit_simulation_step` RPC are server-only. Direct access tests and current live object counts are in `LIVE-STATE.md`.
 
 ## Proposed API surface
 
@@ -57,7 +57,7 @@ The frontend uses only the Supabase publishable key. Public reads should be expo
 | `GET /v1/parameters` | Parameter dictionary, display metadata, unit and depth semantics. |
 | `POST /v1/simulations` and session-scoped `GET` routes | Future isolated event-session surface; not part of permanent observation routes. |
 
-Response envelope proposal:
+Future API response-envelope sketch (public REST routes are not implemented in VBUOY-002):
 
 ```json
 {
@@ -81,4 +81,4 @@ Wind direction remains a degree value plus a compass label using the agreed mete
 
 ## Hosting direction
 
-Use Cloudflare Pages for the static Vite frontend, built with `npm ci && npm run build` and published from `dist/`. Keep Supabase as the separate data/API service. This is a selected deployment path only; no Pages project, domain, deployment or production environment is configured in VBUOY-001.
+Use Cloudflare Pages for the static Vite frontend, built with `npm ci && npm run build` and published from `dist/`. Keep Supabase as the separate data/API service. This is a selected deployment path only; no Pages project, domain or production deployment is configured.

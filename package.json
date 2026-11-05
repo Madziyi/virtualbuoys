@@ -8,6 +8,9 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest run",
+    "simulate:30d": "node scripts/simulate-30-days.mjs",
+    "backfill:initial": "node scripts/backfill-initial-stream.mjs",
+    "check:public-access": "node scripts/check-supabase-public-access.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "check:backend": "node scripts/check-supabase.mjs"
