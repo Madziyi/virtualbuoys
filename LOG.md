@@ -44,3 +44,11 @@ Suggested format:
 - **Generator direction:** Seeded stateful semi-empirical process; shared regional forcing + buoy-specific offsets/lags; 10-minute fixed step; 7-day synthetic backfill; no historical replay. A deterministic accelerated 30-day run is required before deployment.
 - **Live plan:** VBUOY-002 will apply/verify the relational schema, deploy a server-only advancement function, configure authenticated Supabase-native 10-minute scheduling and observe at least two real scheduler ticks before closure.
 - **Next action:** Luna executes the VBUOY-002 plan in `NOW.md`.
+
+
+### 2026-11-05 — VBUOY-002 catalogue amendment: CDOM + chlorophyll
+- **Owner decision:** CDOM and chlorophyll remain in the V1 public buoy catalogue rather than being deferred.
+- **Historical evidence:** Full cleaned 189/191 exports contain substantial CDOM and chlorophyll histories. CDOM is strongly persistent at 10-minute aggregation (lag-1 ~0.90 at 189, ~0.86 at 191). Chlorophyll lag-1 persistence is ~0.73 at 189 and ~0.86 at 191.
+- **Calibration ranges:** CDOM median/p95 is 0/2 at 189 and 1/1 at 191 on the source relative/unitless scale. Chlorophyll median/p95 is approximately 2.2/5.9 µg/L at 189 and 3.5/8.5 µg/L at 191 after explicit conversion from source kg/m³.
+- **Public representation:** chlorophyll = µg/L at 1 m; CDOM = relative/unitless source scale (`1`) at 1 m with clear explanatory labelling. Do not present CDOM as an absolute concentration without better source metadata.
+- **Generator:** both become persistent buoy-specific normal-mode processes; do not make them deterministic proxies for phycocyanin or turbidity.

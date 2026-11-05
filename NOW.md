@@ -31,6 +31,8 @@ Key decision:
 
 ### Single-depth / surface channels
 - phycocyanin at 1 m — µg/L;
+- chlorophyll at 1 m — µg/L (explicitly converted from the source kg/m³ field);
+- CDOM at 1 m — relative/unitless source scale (`1`), clearly labelled as such;
 - turbidity at 2 m — NTU;
 - air temperature — °C;
 - barometric pressure — hPa;
@@ -41,7 +43,7 @@ Key decision:
 - wave mean period — s;
 - wave FROM direction — degrees + compass.
 
-V1 deliberately omits CDOM, chlorophyll, nitrate, maximum wave height and humidity.
+V1 deliberately omits nitrate, maximum wave height and humidity. CDOM and chlorophyll are included.
 
 ## Generator contract
 
@@ -52,7 +54,7 @@ The generator should have:
 2. a slowly evolving water-column state with seasonal stratification;
 3. latent east/north current components, from which public speed + TO direction are derived;
 4. buoy-specific offsets/lags/noise so the three sites are related but not identical;
-5. persistent DO, phycocyanin and turbidity processes informed by the reference envelopes;
+5. persistent DO, phycocyanin, chlorophyll, CDOM and turbidity processes informed by the reference envelopes;
 6. deterministic seed support for tests and backfill;
 7. idempotent advancement so duplicate invocations do not create duplicate timestamps.
 
@@ -131,7 +133,7 @@ If the chosen Supabase scheduler/auth mechanism differs from this recommendation
 - current direction ∈ [0, 360);
 - wind/wave 30-day correlation is positive and roughly 0.4–0.8;
 - buoy series share regional behaviour but are not identical;
-- no accidental sustained HAB-like phycocyanin or extreme turbidity in normal mode.
+- no accidental sustained HAB-like phycocyanin/chlorophyll behaviour or extreme turbidity/CDOM excursions in normal mode.
 
 ### Live database
 - migrations are applied, not merely authored;

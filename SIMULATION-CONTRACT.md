@@ -156,6 +156,8 @@ VBUOY-002 freezes the initial public catalogue to:
 - current speed at 1/4/8 m — m/s;
 - current TO direction at 1/4/8 m — degrees + compass;
 - phycocyanin at 1 m — µg/L;
+- chlorophyll at 1 m — µg/L, explicitly converted from source kg/m³;
+- CDOM at 1 m — relative/unitless source scale (`1`), presented with a plain-language note that it is not an absolute concentration;
 - turbidity at 2 m — NTU;
 - air temperature — °C;
 - barometric pressure — hPa;
@@ -165,7 +167,7 @@ VBUOY-002 freezes the initial public catalogue to:
 - wave mean period — s;
 - wave FROM direction — degrees + compass.
 
-CDOM, chlorophyll, nitrate, maximum wave height and humidity are intentionally omitted from V1 to keep the public experience understandable and because the newly supplied calibration datasets do not provide equally useful evidence for all of them.
+Nitrate, maximum wave height and humidity are intentionally omitted from V1. CDOM and chlorophyll are included because the full 189/191 historical exports provide enough evidence to generate persistent, buoy-specific synthetic series.
 
 ## 10. Long-run acceptance philosophy
 
@@ -206,5 +208,5 @@ Implementation rules from that analysis:
 - source data informs calibration only; do not replay/copy historical rows into production;
 - build normal mode as a persistent state process;
 - three buoys share regional forcing but use independent offsets/lags/noise;
-- do not assume strong turbidity/phycocyanin/wind correlations are universal across sites;
+- do not assume strong turbidity/phycocyanin/chlorophyll/CDOM/wind correlations are universal across sites;
 - validate the normal generator with a deterministic accelerated 30-day run before live scheduling.

@@ -94,7 +94,7 @@ Both contain:
 - chlorophyll;
 - CDOM.
 
-For the V1 public subset, phycocyanin and turbidity are especially useful because they are intuitive water-quality parameters and have enough historical coverage.
+For the V1 public subset, phycocyanin, chlorophyll, CDOM and turbidity are retained. Phycocyanin/turbidity are especially intuitive; chlorophyll and CDOM add useful educational context and have enough historical coverage to support persistent synthetic series.
 
 Robust source evidence:
 
@@ -104,15 +104,23 @@ Robust source evidence:
 | phycocyanin p95 | 7.1 µg/L | 5.3 µg/L |
 | turbidity median | 3.4 NTU* | 0.4 NTU* |
 | turbidity p95 | 10.5 NTU* | 7.1 NTU* |
+| CDOM median | 0 (source relative/unitless scale) | 1 (source relative/unitless scale) |
+| CDOM p95 | 2 | 1 |
+| chlorophyll median | 2.2 µg/L | 3.5 µg/L |
+| chlorophyll p95 | 5.9 µg/L | 8.5 µg/L |
 | selected water-temp median | 23.3 °C | 23.2 °C |
 | selected dissolved-oxygen saturation median | 115.3% | 111.5% |
 
 `* NTU` is supported by the previously inspected source metadata; the CSV column itself uses a dimensionless-looking `(1)` label.
 
+Chlorophyll is stored in the CSV as kg/m³. The public educational unit is explicitly converted to µg/L using `1 kg/m³ = 1,000,000 µg/L`; the numerical medians above reflect that conversion. CDOM is supplied only on a relative/unitless `(1)` scale in these files, so V1 must not relabel it as an absolute concentration.
+
 At 10-minute aggregation, these variables remain strongly persistent:
 - temperature ~0.9996–1.000;
 - dissolved-oxygen saturation ~0.995–0.996;
 - phycocyanin ~0.94–0.95;
+- chlorophyll ~0.73 at 189 and ~0.86 at 191;
+- CDOM ~0.90 at 189 and ~0.86 at 191;
 - turbidity ~0.95–0.99 where enough consecutive data exists.
 
 Cross-variable relationships are **not universal across the two sites**. Examples:
@@ -152,6 +160,8 @@ Raw U/V components may remain an advanced/internal field later; high-school user
 Expose:
 - dissolved-oxygen saturation at 1 m and 8 m, **%**;
 - phycocyanin at 1 m, **µg/L**;
+- chlorophyll at 1 m, **µg/L**, converted explicitly from source kg/m³;
+- CDOM at 1 m, **relative/unitless source scale (`1`)**;
 - turbidity at 2 m, **NTU**.
 
 The chosen virtual depths make the educational profile easy to understand; the generator may calibrate those values from the available source distributions rather than claiming one-to-one sensor identity.
@@ -169,13 +179,11 @@ Expose:
 - wave FROM direction, **degrees + compass**.
 
 For V1, omit:
-- CDOM;
-- chlorophyll;
 - nitrate;
 - maximum wave height;
 - humidity.
 
-They can be added later if they improve the educational experience. Nitrate/humidity are omitted because the attached calibration files do not provide the same useful historical evidence.
+CDOM and chlorophyll are included. Nitrate/humidity remain omitted because the attached calibration files do not provide the same useful historical evidence.
 
 ## Generator design constraints
 
@@ -201,8 +209,9 @@ Recommended structure:
 3. **Water column:** slowly evolving surface temperature plus seasonal stratification; stronger sustained wind should reduce the vertical temperature gradient gradually.
 4. **Currents:** generate east/north latent components, then derive public speed + TO direction. Use depth-dependent scaling and a shared regional component plus buoy-specific variation.
 5. **DO saturation:** persistent, depth-aware and linked modestly to temperature/mixing.
-6. **Phycocyanin:** slow-moving, usually low under normal mode. Do not create a HAB by accident.
-7. **Turbidity:** persistent buoy-specific baseline with modest response to energetic conditions. Avoid making wind/waves deterministically predict turbidity at every buoy.
+6. **Phycocyanin/chlorophyll:** slow-moving, usually moderate/low under normal mode. They may share some broad biological forcing but should not be locked together deterministically.
+7. **CDOM:** persistent buoy-specific relative signal with modest independent variability; keep the source-relative scale and avoid inventing an absolute concentration.
+8. **Turbidity:** persistent buoy-specific baseline with modest response to energetic conditions. Avoid making wind/waves deterministically predict turbidity at every buoy.
 
 Three buoys should share the same regional weather but never return identical water measurements. Use fixed per-buoy biases/lags and deterministic seeded noise.
 
@@ -219,7 +228,7 @@ For a seeded accelerated 30-day run:
 - current speed is non-negative and direction stays in [0, 360);
 - wind/wave relationship is visibly positive, with target run-level correlation roughly **0.4–0.8**;
 - three buoys are correlated but not identical;
-- normal phycocyanin/turbidity remain mostly inside the historical robust envelopes;
+- normal phycocyanin/chlorophyll/CDOM/turbidity remain mostly inside the historical robust envelopes;
 - source-like 10-minute rate-of-change magnitudes are not routinely exceeded;
 - seeded reruns produce identical output.
 

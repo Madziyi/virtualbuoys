@@ -17,7 +17,7 @@ Observed candidates (source spellings and units preserved; none are frozen for t
 | Northward Current Velocity | m/s | 1–9 m | Component data, not a public speed/direction pair. |
 | Dissolved Oxygen Saturation | % | 1, 2.2, 8.5 and 9.5 m | Distinct from dissolved-oxygen concentration. |
 | Phycocyanin | ug/L | 1.2 m | Cyanobacteria-associated pigment candidate. |
-| Chlorophyll | g/L | 1.2 m | Preserve source unit pending metadata confirmation; do not silently convert. |
+| Chlorophyll | kg/m³ in the attached CSVs | 1.2 m | V1 explicitly converts to µg/L for the public API; conversion must be tested and documented. |
 | Turbidity | NTU | 2 and 2.4 m | Source name/unit retained. |
 | Air Temperature | K | no depth | Source unit is Kelvin. |
 | Barometric Pressure | Pa | no depth | Source unit is pascals. |
@@ -29,7 +29,7 @@ Observed candidates (source spellings and units preserved; none are frozen for t
 
 The rows are not a single synchronized snapshot: `measured_at` spans `2025-08-31T14:00:00Z` through `2026-10-17T13:36:37Z`. The export contains QARTOD flag values 2 (12 rows), 3 (2 rows) and 9 (39 rows), but this file does not include the flag legend. Preserve a nullable raw quality flag; do not infer its meaning from the number alone. The reference buoy IDs and channel IDs are source identifiers and must not become virtual-buoy public IDs.
 
-This evidence supports a depth-aware channel registry and observation model. It is not sufficient to choose the final student-facing subset, harmonize units, select representative depths, interpret quality codes, or define current-direction-from/to semantics.
+This evidence supports a depth-aware channel registry and observation model. VBUOY-002 planning now freezes the initial student-facing subset and representative virtual depths in `NOW.md` and `SIMULATION-CONTRACT.md`; quality-code meanings remain unresolved and raw source IDs/flags are not copied into synthetic production observations.
 
 ## Proposed relational model
 
