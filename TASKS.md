@@ -9,11 +9,10 @@ States:
 
 ## In progress
 
-None currently.
+- **VBUOY-004** `[in-progress]` — Public read-only REST API, versioned OpenAPI 3.1 contract, interactive playground, and curl/JavaScript/Python examples.
 
 ## Ready
 
-- **VBUOY-004** `[ready]` — Public REST API + OpenAPI/Swagger playground + Python/JS/curl examples.
 - **VBUOY-005** `[ready]` — Event Mode: isolated Normal/Storm/Turnover/HAB simulations at 1×/2×/5×/10×.
 - **VBUOY-006** `[ready]` — Hardening: accelerated multi-day simulator tests, normal-cadence soak testing, API abuse controls, responsive/accessibility UAT.
 

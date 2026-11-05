@@ -103,3 +103,12 @@ Suggested format:
 - **Live state/security:** Public probe: 69 latest rows, all three buoys, anonymous observation insert rejected with 42501, unauthenticated function 401. No schema, scheduler, generator or deployed-function changes.
 - **Known issues:** Existing MapLibre build size advisory and external map tile dependency.
 - **Next action:** Owner/Terra selects and plans the next initiative.
+
+
+### 2026-11-05 — VBUOY-003 accepted + VBUOY-004 public API planning
+- **Review:** Terra resynced GitHub at `2205c28516f01a59fc9ff11a0d405be9463ecb26` and accepted the VBUOY-003 closure. True 390×840 and 1440×900 UAT, complete keyboard coverage, exact card/history agreement, same-view 432-row CSV verification, mocked >1,000-row pagination and security regression checks are all recorded as passed.
+- **Decision:** Move to VBUOY-004 before Event Mode. The next milestone is a beginner-friendly read-only REST API over the same synthetic dataset, with OpenAPI 3.1 as the checked-in contract and an interactive public playground.
+- **API direction:** Stable `/v1` routes for health, buoys, buoy detail, latest, bounded observations and parameter metadata. Observation requests are capped at seven days and support simple `hours` or explicit `start/end` ranges plus optional depth.
+- **Security:** API is GET/OPTIONS only; no public write surface, no scheduler token, no generator state, no exposed privileged credentials. VBUOY-006 still owns advanced abuse/rate-limit hardening.
+- **UX:** Existing API navigation should lead to a useful playground with copyable curl, JavaScript and Python examples. Heavy Swagger/OpenAPI UI should be lazy-loaded if practical.
+- **Next action:** Luna executes VBUOY-004 from `NOW.md` and `docs/public-api-contract.md`.
