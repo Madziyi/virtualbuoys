@@ -343,3 +343,58 @@ Luna syncs `main`, implements this bounded VBUOY-003 public explorer, performs l
 ## Implementation handoff — 2026-11-05
 
 Explorer implementation is present, but do not declare VBUOY-003 complete. The browser viewport override requested at 390 CSS px reported 559 CSS px, so the required ~390 px UAT and overflow verification remain open. Desktop-size UAT, all-marker keyboard/focus coverage, and explicit latest-card/chart timestamp agreement still need verification. A seven-day Central temperature view reported 3,024 observations; a separate 24-hour CSV contained 432 data rows, matching the previously displayed 432-row view, but the browser download automation stalled and the exact same-view check should be repeated. Add a focused pagination test with mocked multi-page responses. Recheck the complete acceptance criteria before closure.
+
+
+## Terra review — closure pass required
+
+Terra reviewed commit `7d1de48ca2f81099ab5e83f4fd753742c7759260` and accepts the implementation direction, but agrees with Luna that VBUOY-003 is **not yet complete**.
+
+The remaining work is verification/fix-only. Do not broaden scope.
+
+### Required closure checks
+
+1. **Exact mobile viewport**
+   - verify a true CSS viewport of 390 px wide;
+   - the verification method must assert the effective viewport (for example `window.innerWidth === 390`), not merely request a device override;
+   - check map, buoy selector, reading groups, chart, controls, exact-values table and CSV button;
+   - verify no horizontal overflow.
+
+2. **Desktop pass**
+   - verify at a representative desktop viewport (target 1440×900 unless local tooling requires an equivalent);
+   - check map selection, grouped readings, parameter/range controls, chart/table and CSV control.
+
+3. **Keyboard/focus coverage**
+   - tab to and activate all three external buoy controls;
+   - tab to and activate all three map markers;
+   - verify visible focus and `aria-pressed`/selection state tracks correctly.
+
+4. **Card ↔ history agreement**
+   - choose a parameter/depth whose latest timestamp falls inside the current history range;
+   - verify the latest card value and the history/exact-value table contain the same timestamp/value for that channel;
+   - record the exact example used.
+
+5. **Same-view CSV verification**
+   - for one selected buoy + parameter + range, record the visible history row count;
+   - download/export that exact current view;
+   - verify CSV data-row count equals the current fetched dataset;
+   - verify filename, UTC ISO timestamps, depth, unit, provenance and direction convention where applicable.
+   - Browser download automation is not mandatory if a lower-level test plus one real manual/browser click proves the same code path, but the evidence must be explicit.
+
+6. **Pagination regression test**
+   - add a focused mocked test that forces at least two pages for one channel and proves `fetchHistory` returns the complete ordered result without duplicates;
+   - ideally also cover multiple depth channels so the flatten/sort path is exercised.
+
+7. **Regression gates**
+   - rerun tests, lint, typecheck, build and `git diff --check`;
+   - rerun the existing public-access/security probe;
+   - do not change Supabase schema, scheduler or generator unless a real defect requires it.
+
+### Closure rule
+
+If these checks pass without material product changes, close VBUOY-003 in `NOW.md`/`TASKS.md` and append exact evidence to `LOG.md`.
+
+If any check reveals a defect, make the smallest targeted fix, rerun the affected verification, then close only when the acceptance criteria are satisfied.
+
+## Next action
+
+Luna performs the VBUOY-003 verification/fix-only closure pass above and pushes the final verified handoff.

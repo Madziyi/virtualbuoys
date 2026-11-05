@@ -83,3 +83,11 @@ Suggested format:
 - **Live state:** Read-only checks only; no deployment, schema, configuration or generator changes.
 - **Known issues:** UAT and focused pagination coverage are incomplete; do not mark initiative done. Browser download automation stalled.
 - **Next action:** Finish the outstanding verification in NOW.md, fix any findings, then close VBUOY-003.
+
+
+### 2026-11-05 — Terra review of VBUOY-003 partial handoff
+- **Review:** Resynced GitHub at `7d1de48ca2f81099ab5e83f4fd753742c7759260` and reviewed the implementation/data layer. The architecture remains within scope: public publishable reads only, paginated history helper, lightweight SVG chart, external + map buoy selection, grouped readings, education and CSV export.
+- **Accepted evidence:** 3 files/9 tests, lint/type/build/diff pass; live 69-row public read; anonymous write rejection; 401 unauthenticated function call; Central temperature returned 432 rows for 24 h and 3,024 for 7 d; partial keyboard and CSV evidence.
+- **Not accepted as closure:** Requested 390 px emulation reported 559 CSS px; desktop/full keyboard coverage, explicit card↔history value agreement, exact same-view CSV proof and mocked multi-page pagination coverage remain incomplete.
+- **Code-review note:** `fetchHistory` implements per-channel 1,000-row paging and then flattens/sorts depth channels, but the current tests do not exercise a second page. Closure requires that regression test.
+- **Decision:** Keep VBUOY-003 active. Next pass is verification/fix-only; do not move to VBUOY-004 until the remaining acceptance checks pass.

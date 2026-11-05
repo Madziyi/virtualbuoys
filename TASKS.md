@@ -9,7 +9,7 @@ States:
 
 ## In progress
 
-- **VBUOY-003** `[in-progress]` — Public explorer: interactive buoy selection, grouped live readings, parameter education, 24h/3d/7d history charts, depth profiles and current-view CSV download.
+- **VBUOY-003** `[in-progress]` — Implementation is present; closure pass remains: true 390 px + desktop UAT, all-marker/control keyboard coverage, latest/history agreement, same-view CSV verification, and mocked multi-page pagination test.
 
 ## Ready
 
@@ -33,4 +33,3 @@ None currently.
 - Historical event replay — intentionally excluded from current public concept.
 - Mini challenges/gamification — intentionally excluded from current scope.
 
-- VBUOY-003 implementation is partial: finish desktop and ~390 px mobile UAT, all-marker keyboard/focus checks, same-timestamp card/chart comparison, same-view CSV count verification, and pagination tests before closure. See NOW.md.
