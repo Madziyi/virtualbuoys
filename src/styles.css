@@ -243,3 +243,7 @@ button:focus-visible, select:focus-visible, summary:focus-visible, a:focus-visib
   .history-controls select, fieldset button, .button { min-height:44px; }
   .api-section h2 { font-size:22px; }
 }
+.history-chart-shell { height: min(60vh, 540px); min-height: 380px; width:100%; min-width:0; font-variant-numeric:tabular-nums; }
+.history-chart-shell .recharts-legend-item-text { color:#52646f !important; }
+@media (max-width:720px) { .history-chart-shell { height:380px; min-height:0; } .chart-wrap { padding:14px 8px; } }
+.history-chart-shell { overflow:hidden; }

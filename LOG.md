@@ -131,3 +131,10 @@ Suggested format:
 - **Browser:** Desktop layout visually inspected with live data. At actual 390 x 840 CSS pixels, document client/scroll widths both 375 pixels; West selection updated map and readings, history returned 432 observations, and the API playground loaded without page overflow.
 - **Live state:** No deployments or infrastructure changes. VBUOY-004 remains partial pending its outstanding contract/security and dependency reviews.
 - **Checks:** After an initial concurrent run timed out in two simulation tests and identified an ambiguous text assertion, corrected the assertion and reran the suite without competing checks: 5 files / 14 tests passed. Lint, typecheck, build and diff check passed. Build retains large-chunk advisory.
+
+
+### 2026-11-06 - Trends chart refinement
+- **Changed:** Replaced the small SVG history chart with a Hardwater Trends/Compare-inspired Recharts chart, same-unit depth series legend, dashed grid, time ticks and hover values. A ten-minute grid preserves gaps. Direction uses unconnected colored points on a 0-360 scale; CSV and exact-value table remain.
+- **Verification:** 6 test files / 15 tests passed, including depth alignment and missing intervals. Lint, typecheck, build and diff check passed. Build retains large chunk advisory; main bundle increased with Recharts. Installation reported 14 dependency advisories (2 low, 12 moderate), previously outstanding.
+- **Browser:** Desktop 1440 CSS pixels: seven-day temperature comparison displayed three depths and 3,024 rows. Mobile 390 x 840: current direction displayed three colored point series, 3,024 rows, and client/scroll widths both 375 pixels after fixing tooltip overflow. No backend or live configuration changes.
+- **Next action:** Continue VBUOY-004 contract/security review and dependency follow-up.

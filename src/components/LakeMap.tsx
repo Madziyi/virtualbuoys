@@ -3,6 +3,7 @@ import { Map as MapLibreMap, Marker, NavigationControl, setWorkerUrl, type Style
 import 'maplibre-gl/dist/maplibre-gl.css'
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 import { buoys, catalogue } from '../simulation/catalogue'
+import { HistoryChart } from './HistoryChart'
 import { compass, fetchHistory, fetchLatest, makeCsv, type Latest, type Observation } from '../lib/explorer'
 
 setWorkerUrl(workerUrl)
@@ -34,21 +35,6 @@ const education: Record<string, [string,string]> = {
 }
 const format = (value: number, unit: string, direction?: string) => direction ? `${value.toFixed(1)}° ${compass(value)} ${direction.toUpperCase()}` : `${value.toFixed(2)} ${unit === '1' ? 'relative' : unit}`
 
-function Chart({rows, direction, unit}: {rows: Observation[]; direction?: string; unit: string}) {
-  if (!rows.length) return <p>No observations in this range.</p>
-  const times = rows.map(r => Date.parse(r.observed_at)), minT = Math.min(...times), maxT = Math.max(...times)
-  const values = rows.map(r => r.value), min = direction ? 0 : Math.min(...values), max = direction ? 360 : Math.max(...values)
-  const x = (r: Observation) => 45 + (Date.parse(r.observed_at)-minT)/(maxT-minT || 1)*720
-  const y = (r: Observation) => 180 - (r.value-min)/(max-min || 1)*150
-  const depths = [...new Set(rows.map(r => r.depth_m))].sort((a,b) => (a ?? 0)-(b ?? 0))
-  const colors = ['#247f79','#d09458','#516e9a']
-  return <><div className="legend">{depths.map((d,i) => <span key={String(d)}><i style={{background: colors[i]}} />{d === null ? 'Surface' : `${d} m`}</span>)}</div><svg className="history-chart" viewBox="0 0 800 220" role="img" aria-label={`Historical observations in ${unit}; exact values are available in the table below`}>
-    <line x1="45" y1="30" x2="45" y2="180" stroke="#9eafaa"/><line x1="45" y1="180" x2="765" y2="180" stroke="#9eafaa"/>
-    <text x="2" y="34">{max.toFixed(1)}</text><text x="2" y="180">{min.toFixed(1)}</text><text x="45" y="207">{new Date(minT).toLocaleDateString()}</text><text x="765" y="207" textAnchor="end">{new Date(maxT).toLocaleDateString()}</text>
-    {depths.map((depth,i) => { const series = rows.filter(r => r.depth_m === depth); const segments: Observation[][] = []; series.forEach(r => { const last = segments.at(-1); if (!last || Date.parse(r.observed_at) - Date.parse(last[last.length-1].observed_at) > 600000) segments.push([r]); else last.push(r) }); return direction ? <g key={String(depth)}>{series.map(r => <circle key={r.observed_at} cx={x(r)} cy={y(r)} r="1.7" fill={colors[i]} />)}</g> : <g key={String(depth)}>{segments.map((segment,j) => <polyline key={j} fill="none" stroke={colors[i]} strokeWidth="2" points={segment.map(r => `${x(r)},${y(r)}`).join(' ')} />)}</g> })}
-  </svg></>
-}
-
 export function LakeMap() {
   const container = useRef<HTMLDivElement>(null), markers = useRef<Record<string, HTMLButtonElement>>({})
   const [selected, setSelected] = useState('central'), [key, setKey] = useState('water_temperature'), [range, setRange] = useState('24h')
@@ -77,7 +63,7 @@ export function LakeMap() {
     </section>
     </div>
     <section className="history" id="history"><span className="eyebrow">A closer look</span><h2>Explore the data</h2><p>Synthetic · educational. Select a parameter to follow its observations over time.</p><div className="history-controls"><label>Parameter <select value={key} onChange={e => setKey(e.target.value)}>{parameters.map(p => <option key={p.key} value={p.key}>{p.label}</option>)}</select></label><fieldset><legend>Time range</legend>{['24h','3d','7d'].map(r => <button key={r} type="button" aria-pressed={r === range} onClick={() => setRange(r)}>{r === '24h' ? '24 h' : r === '3d' ? '3 d' : '7 d'}</button>)}</fieldset><button type="button" className="button button-primary" onClick={download} disabled={!history.length || !!historyStatus}>Download CSV</button></div>
-      <div className="chart-wrap"><h3>{parameter.label} · {parameter.unit === '1' ? 'relative' : parameter.unit}</h3>{historyStatus ? <p role="status">{historyStatus}</p> : <Chart rows={history} direction={parameter.direction} unit={parameter.unit}/>}</div>
+      <div className="chart-wrap"><h3>{parameter.label} · {parameter.unit === '1' ? 'relative' : parameter.unit}</h3>{historyStatus ? <p role="status">{historyStatus}</p> : <HistoryChart rows={history} direction={parameter.direction} unit={parameter.unit} range={range} label={parameter.label}/>}</div>
       <div className="education"><div><h3>What is it?</h3><p>{education[key][0]}</p></div><div><h3>Why look at it?</h3><p>{education[key][1]}</p></div>{parameter.direction && <p>Bearings are clockwise from north: 0° N, 90° E, 180° S, 270° W. {parameter.direction === 'from' ? 'Direction describes where wind or waves come FROM.' : 'Direction describes where water moves TO.'} Points are shown without connecting lines to avoid a false swing across north.</p>}</div>
       <details><summary>View exact observations ({history.length})</summary><div className="table-wrap"><table><thead><tr><th>Time (UTC)</th><th>Depth</th><th>Value</th></tr></thead><tbody>{history.map(r => <tr key={`${r.observed_at}-${r.depth_m}`}><td>{new Date(r.observed_at).toISOString()}</td><td>{r.depth_m === null ? '—' : `${r.depth_m} m`}</td><td>{r.value} {parameter.unit === '1' ? 'relative' : parameter.unit}{parameter.direction ? ` ${compass(r.value)} ${parameter.direction.toUpperCase()}` : ''}</td></tr>)}</tbody></table></div></details>
     </section>

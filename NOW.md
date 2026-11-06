@@ -352,3 +352,8 @@ The public-api function and lazy Swagger playground are implemented. Live versio
 ## Visual refinement - 2026-11-06
 
 The owner requested the Hardwater visual aesthetic. The explorer has been restyled as a map-first dashboard using cool panels, blue controls and compact typography. VBUOY-004 remains partial; its contract review, security scan and remaining dependency advisories are still open.
+
+
+## Trends refinement - 2026-11-06
+
+The owner requested the Hardwater Trends/Compare chart style. History now uses a responsive Recharts graph with depth comparisons, gridlines and tooltips. VBUOY-004 remains partial with its previously recorded contract/security and dependency follow-up.
