@@ -124,3 +124,10 @@ Suggested format:
 - **Next action:** Complete effective 390 CSS-pixel UAT, resolve/check dependency advisories, complete contract and security review, then rerun final checks and update this handoff.
 
 - **Dependency follow-up:** `npm audit fix` removed high advisories; 14 total remain (2 low, 12 moderate), including Swagger transitive deepmerge/minimatch. Do not use force without review.
+
+
+### 2026-11-06 - Hardwater-inspired visual refinement
+- **Changed:** Replaced the promotional hero with a map-first dashboard; adopted Hardwater-inspired white canvas, cool panel surfaces, blue actions, rounded outlines and Google Sans. Kept synthetic labels, map, readings, history, CSV and API playground. No backend changes.
+- **Browser:** Desktop layout visually inspected with live data. At actual 390 x 840 CSS pixels, document client/scroll widths both 375 pixels; West selection updated map and readings, history returned 432 observations, and the API playground loaded without page overflow.
+- **Live state:** No deployments or infrastructure changes. VBUOY-004 remains partial pending its outstanding contract/security and dependency reviews.
+- **Checks:** After an initial concurrent run timed out in two simulation tests and identified an ambiguous text assertion, corrected the assertion and reran the suite without competing checks: 5 files / 14 tests passed. Lint, typecheck, build and diff check passed. Build retains large-chunk advisory.

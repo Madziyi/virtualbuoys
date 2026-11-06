@@ -15,9 +15,9 @@ describe('foundation shell', () => {
   it('labels the experience as synthetic and educational', () => {
     render(<App />)
 
-    expect(screen.getByRole('heading', { name: /a little closer to the water/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /explore the lake/i })).toBeInTheDocument()
     expect(screen.getByText(/synthetic · educational/i)).toBeInTheDocument()
-    expect(screen.getByText(/all readings are synthetic/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/all readings are synthetic/i).length).toBeGreaterThan(0)
   })
 
   it('provides an accessible MapLibre canvas placeholder', () => {

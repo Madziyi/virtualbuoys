@@ -347,3 +347,8 @@ Luna syncs `main`, executes VBUOY-004, deploys/verifies the read-only API, perfo
 ## Implementation handoff - 2026-11-05
 
 The public-api function and lazy Swagger playground are implemented. Live version 2 was deployed and probed. The initiative is **not closed**: true 390 CSS-pixel UAT remains outstanding because the available browser override reported innerWidth 582 when 390 was requested. Complete mobile layout/scroll and Try It Out verification at an effective 390 CSS pixels; inspect dependency audit and resolve remaining advisories; review the OpenAPI contract and tests for completeness. See LOG.md for evidence.
+
+
+## Visual refinement - 2026-11-06
+
+The owner requested the Hardwater visual aesthetic. The explorer has been restyled as a map-first dashboard using cool panels, blue controls and compact typography. VBUOY-004 remains partial; its contract review, security scan and remaining dependency advisories are still open.
