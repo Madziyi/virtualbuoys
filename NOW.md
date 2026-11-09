@@ -357,3 +357,8 @@ The owner requested the Hardwater visual aesthetic. The explorer has been restyl
 ## Trends refinement - 2026-11-06
 
 The owner requested the Hardwater Trends/Compare chart style. History now uses a responsive Recharts graph with depth comparisons, gridlines and tooltips. VBUOY-004 remains partial with its previously recorded contract/security and dependency follow-up.
+
+
+## Depth-grouped reading cards - 2026-11-09
+
+The buoy detail now groups measurements into weather and surface, then actual 1 m, 2 m, 4 m and 8 m depths. Individual cards open the corresponding parameter trend. VBUOY-004 remains partial pending its prior contract/security and dependency review.

@@ -138,3 +138,10 @@ Suggested format:
 - **Verification:** 6 test files / 15 tests passed, including depth alignment and missing intervals. Lint, typecheck, build and diff check passed. Build retains large chunk advisory; main bundle increased with Recharts. Installation reported 14 dependency advisories (2 low, 12 moderate), previously outstanding.
 - **Browser:** Desktop 1440 CSS pixels: seven-day temperature comparison displayed three depths and 3,024 rows. Mobile 390 x 840: current direction displayed three colored point series, 3,024 rows, and client/scroll widths both 375 pixels after fixing tooltip overflow. No backend or live configuration changes.
 - **Next action:** Continue VBUOY-004 contract/security review and dependency follow-up.
+
+
+### 2026-11-09 - Depth-grouped buoy readings
+- **Changed:** Reorganized the selected buoy readings into weather/surface and 1/2/4/8 m depth sections, with individual interactive mini-cards and parameter icons inspired by Hardwater. Each card opens the existing parameter trend; unavailable readings display a dash. No backend or live configuration changes.
+- **Verification:** 7 files / 16 tests passed, including depth grouping, direction formatting and card selection; lint, typecheck, build and diff check passed. Build retains existing large-chunk advisory.
+- **Browser:** Desktop 1440 x 900: West selection and card values inspected. Mobile actual 390 x 840: 8 m oxygen card selected the oxygen trend; document client/scroll widths both 375 pixels.
+- **Next action:** Continue outstanding VBUOY-004 contract/security and dependency review.

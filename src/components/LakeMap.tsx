@@ -4,17 +4,12 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 import { buoys, catalogue } from '../simulation/catalogue'
 import { HistoryChart } from './HistoryChart'
+import { ReadingCards } from './ReadingCards'
 import { compass, fetchHistory, fetchLatest, makeCsv, type Latest, type Observation } from '../lib/explorer'
 
 setWorkerUrl(workerUrl)
 const style: StyleSpecification = { version: 8, sources: { osm: { type: 'raster', tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'], tileSize: 256, attribution: '© OpenStreetMap contributors' } }, layers: [{ id: 'osm', type: 'raster', source: 'osm' }] }
 const parameters = catalogue.filter((item, index) => catalogue.findIndex(p => p.key === item.key) === index)
-const groups: [string, string[]][] = [
-  ['Weather', ['air_temperature','barometric_pressure','wind_speed','wind_gust','wind_direction']],
-  ['Water quality', ['dissolved_oxygen_saturation','phycocyanin','chlorophyll','cdom','turbidity']],
-  ['Water column', ['water_temperature']],
-  ['Waves & currents', ['significant_wave_height','wave_mean_period','wave_direction','current_speed','current_direction']],
-]
 const education: Record<string, [string,string]> = {
   water_temperature: ['Water temperature at a virtual depth.', 'Compare depths to explore how the water column changes.'],
   current_speed: ['How quickly water moves at a virtual depth.', 'Compare flow between depths and over time.'],
@@ -33,8 +28,6 @@ const education: Record<string, [string,string]> = {
   wave_mean_period: ['The average time between waves.', 'Explore how the spacing of waves changes.'],
   wave_direction: ['The compass bearing waves come from.', 'Explore where waves approach from.'],
 }
-const format = (value: number, unit: string, direction?: string) => direction ? `${value.toFixed(1)}° ${compass(value)} ${direction.toUpperCase()}` : `${value.toFixed(2)} ${unit === '1' ? 'relative' : unit}`
-
 export function LakeMap() {
   const container = useRef<HTMLDivElement>(null), markers = useRef<Record<string, HTMLButtonElement>>({})
   const [selected, setSelected] = useState('central'), [key, setKey] = useState('water_temperature'), [range, setRange] = useState('24h')
@@ -59,7 +52,7 @@ export function LakeMap() {
       <div className="buoy-summaries" aria-label="Select a virtual buoy">{buoys.map(site => <button className="buoy-summary" type="button" key={site.slug} aria-pressed={selected === site.slug} onClick={() => setSelected(site.slug)}><span className="buoy-summary-tag">VIRTUAL · SYNTHETIC</span><strong>{site.name}</strong></button>)}</div><p className="map-caption">Illustrative Essex County nearshore sites · Synthetic educational data only</p>
     </section>
     <section className="detail"><span className="eyebrow">VIRTUAL · SYNTHETIC</span><h2>{buoy.name}</h2><p>Data updates every 10 minutes. {timestamp ? <>Latest observation: <time dateTime={timestamp}>{new Date(timestamp).toLocaleString()}</time>.</> : latestStatus}</p><p className="coordinates">{buoy.latitude.toFixed(3)}° N · {Math.abs(buoy.longitude).toFixed(3)}° W</p>
-      <div className="reading-groups">{groups.map(([name,keys]) => <section key={name}><h3>{name}</h3>{keys.map(k => {const p = parameters.find(item => item.key === k)!; const readings = selectedRows.filter(r => r.key === k).sort((a,b) => (a.depth_m ?? 0)-(b.depth_m ?? 0)); return <div className="reading" key={k}><button type="button" onClick={() => {setKey(k); document.getElementById('history')?.scrollIntoView()}}>{p.label}</button><span>{readings.length ? readings.map(r => `${r.depth_m === null ? '' : `${r.depth_m} m: `}${format(r.value,p.unit,p.direction)}`).join(' · ') : '—'}</span></div>})}</section>)}</div>
+      <ReadingCards rows={selectedRows} onSelect={k => { setKey(k); document.getElementById('history')?.scrollIntoView() }} />
     </section>
     </div>
     <section className="history" id="history"><span className="eyebrow">A closer look</span><h2>Explore the data</h2><p>Synthetic · educational. Select a parameter to follow its observations over time.</p><div className="history-controls"><label>Parameter <select value={key} onChange={e => setKey(e.target.value)}>{parameters.map(p => <option key={p.key} value={p.key}>{p.label}</option>)}</select></label><fieldset><legend>Time range</legend>{['24h','3d','7d'].map(r => <button key={r} type="button" aria-pressed={r === range} onClick={() => setRange(r)}>{r === '24h' ? '24 h' : r === '3d' ? '3 d' : '7 d'}</button>)}</fieldset><button type="button" className="button button-primary" onClick={download} disabled={!history.length || !!historyStatus}>Download CSV</button></div>
