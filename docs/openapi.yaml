@@ -54,26 +54,6 @@
               }
             }
           },
-          "400": {
-            "description": "Structured error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Structured error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
           "405": {
             "description": "Structured error",
             "content": {
@@ -127,26 +107,6 @@
                       }
                     }
                   }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Structured error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Structured error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -223,16 +183,6 @@
                       }
                     }
                   }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Structured error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -338,16 +288,6 @@
               }
             }
           },
-          "400": {
-            "description": "Structured error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
           "404": {
             "description": "Structured error",
             "content": {
@@ -408,7 +348,25 @@
             "required": true,
             "description": "Public parameter key",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "water_temperature",
+                "current_speed",
+                "current_direction",
+                "dissolved_oxygen_saturation",
+                "phycocyanin",
+                "chlorophyll",
+                "cdom",
+                "turbidity",
+                "air_temperature",
+                "barometric_pressure",
+                "wind_speed",
+                "wind_gust",
+                "wind_direction",
+                "significant_wave_height",
+                "wave_mean_period",
+                "wave_direction"
+              ]
             }
           },
           {
@@ -426,20 +384,22 @@
             "name": "start",
             "in": "query",
             "required": false,
-            "description": "UTC ISO timestamp; requires end.",
+            "description": "UTC timestamp ending in Z with seconds; requires end.",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
             }
           },
           {
             "name": "end",
             "in": "query",
             "required": false,
-            "description": "UTC ISO timestamp; requires start.",
+            "description": "UTC timestamp ending in Z with seconds; requires start.",
             "schema": {
               "type": "string",
-              "format": "date-time"
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
             }
           },
           {
@@ -578,26 +538,6 @@
                       }
                     }
                   }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Structured error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Structured error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
                 }
               }
             }

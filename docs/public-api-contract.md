@@ -152,19 +152,11 @@ Do not return raw database or stack-trace errors.
 
 The public API is intended to be callable directly from browser projects.
 
-V1 should support public GET/OPTIONS CORS without credentialed requests.
-
-Document the exact headers in the OpenAPI description and implementation notes.
+The function returns `Access-Control-Allow-Origin: *`, `Access-Control-Allow-Methods: GET, OPTIONS`, and `Access-Control-Allow-Headers: content-type`. It does not allow credentials. Unsupported methods return 405 with the structured error schema.
 
 ## Cache policy
 
-Suggested starting policy:
-- `/health`: short cache;
-- `/buoys`, buoy metadata, `/parameters`: longer public cache;
-- `/latest`: cache aligned to the 10-minute source cadence;
-- observations: moderate public cache because historical rows are immutable once written.
-
-Luna should choose exact values and test emitted headers.
+Current `Cache-Control` policy: `/health` uses `public, max-age=30`; buoy and parameter metadata use `public, max-age=3600`; latest and history use `public, max-age=60`. Errors use `no-store`.
 
 ## Security boundary
 
@@ -192,3 +184,8 @@ The deployed function and playground must follow it.
 Do not add simulation-session routes in VBUOY-004.
 
 VBUOY-005 will define a separate event-session contract and must not mutate the permanent API history.
+
+
+## Contract verification
+
+Run `python -m pip install -r scripts/requirements-api-contract.txt` in an isolated environment, then `python scripts/check-openapi-live.py` to validate OpenAPI 3.1 and compare representative live responses and method behavior against the checked-in schemas. The probe does not induce production 500 errors; that path is reviewed in source.

@@ -81,4 +81,4 @@ Wind direction remains a degree value plus a compass label using the agreed mete
 
 ## Hosting direction
 
-Use Cloudflare Pages for the static Vite frontend, built with `npm ci && npm run build` and published from `dist/`. Keep Supabase as the separate data/API service. This is a selected deployment path only; no Pages project, domain or production deployment is configured.
+Use Cloudflare Pages for the static Vite frontend, built with `npm ci && npm run build` and published from `dist/`. Keep Supabase as the separate data/API service. The initial production frontend uses Pages Direct Upload; see `LIVE-STATE.md` for verified deployment details.

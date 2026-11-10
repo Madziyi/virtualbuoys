@@ -30,8 +30,9 @@ Do not record schema, migrations, functions, URLs, keys or deployed resources he
 
 ## Frontend hosting
 
-- Cloudflare Pages selected as the static Vite hosting direction in source documentation.
-- No Pages project, domain, deployment or production environment has been configured or verified.
+- Cloudflare Pages project `virtual-buoys`, production branch `main`, deployed by Wrangler Direct Upload on 2026-11-09 (America/New_York). Public production URL: https://virtual-buoys.pages.dev/.
+- Deployment ID `5315abf1-3c0d-4220-a65c-7a99af9aad7f`; immutable deployment URL https://5315abf1.virtual-buoys.pages.dev/. Wrangler reported source `129d73f`; the upload included the reviewed, uncommitted OpenAPI documentation changes recorded in the closure commit. The deployed site and its live data/API calls were verified in a browser.
+- Static Vite assets were built locally into `dist/` using only `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` from ignored local configuration. No Pages environment variables were configured. This is a Direct Upload project; Git commits do not automatically deploy, and Cloudflare does not support converting a Direct Upload project to Git integration.
 
 ## Database schema
 
@@ -57,7 +58,7 @@ Do not record schema, migrations, functions, URLs, keys or deployed resources he
 
 ## External providers
 
-- None verified live yet.
+- OpenStreetMap raster tiles loaded in production browser UAT on 2026-11-09.
 
 ## Secrets
 
@@ -65,7 +66,7 @@ Do not record schema, migrations, functions, URLs, keys or deployed resources he
 
 ## Known drift
 
-Cloudflare Pages remains unconfigured; Event Mode remains future scope. No raw reference observations were loaded into production.
+Event Mode remains future scope. No raw reference observations were loaded into production.
 
 
 ### 2026-11-05 - VBUOY-004 public API

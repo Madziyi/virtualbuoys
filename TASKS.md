@@ -9,7 +9,7 @@ States:
 
 ## In progress
 
-- **VBUOY-004** `[in-progress]` — API/playground implemented; closure remains: OpenAPI contract review, security/dependency review, frontend deployment, and production desktop/390px UAT.
+None currently.
 
 ## Ready
 
@@ -22,6 +22,8 @@ None currently.
 
 ## Done
 
+- **VBUOY-004** `[done]` — Public REST API and OpenAPI playground deployed, contract/security/dependency reviewed and production desktop/mobile UAT completed. See NOW.md, LOG.md and LIVE-STATE.md.
+
 - **VBUOY-003** `[done]` — Public explorer, verified live data, complete pagination/CSV coverage and desktop/mobile/keyboard UAT. See NOW.md and LOG.md for evidence.
 
 - Shared Terra/Luna durable-context bootstrap authored.
@@ -33,7 +35,3 @@ None currently.
 - Dedicated Python/FastAPI service — only introduce if later requirements justify it.
 - Historical event replay — intentionally excluded from current public concept.
 - Mini challenges/gamification — intentionally excluded from current scope.
-
-
-
-- VBUOY-004 partial: public-api deployed; complete actual 390 CSS-pixel playground UAT and dependency audit follow-up before closure. See NOW.md and LOG.md.

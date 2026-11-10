@@ -26,8 +26,10 @@ npm run check:backend
 
 ## Scope
 
-VBUOY-001 is the shell and contract baseline. The source-grounded database/API proposal is in [`docs/data-api-schema.md`](docs/data-api-schema.md). No production schema, simulator, scheduler, public endpoint or deployment is included yet.
+The deployed V1 schema and public API are described in [`docs/data-api-schema.md`](docs/data-api-schema.md) and [`docs/public-api-contract.md`](docs/public-api-contract.md). Verified infrastructure facts are in [`LIVE-STATE.md`](LIVE-STATE.md).
 
 ## Hosting direction
 
-Cloudflare Pages is the selected static Vite hosting direction. Build with `npm ci && npm run build`, publish `dist/`. Hosting has not been configured or deployed.
+Cloudflare Pages hosts the static Vite frontend at https://virtual-buoys.pages.dev/. The `virtual-buoys` project uses Direct Upload, so Git pushes do not deploy automatically. Cloudflare does not support converting this project to Git integration; automatic Git builds would require a new Pages project.
+
+To deploy a reviewed revision: configure only `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` in ignored `.env.local`, run `npm ci` and `npm run build`, run `node scripts/check-build-secrets.mjs`, then deploy `dist/` with `wrangler pages deploy dist --project-name virtual-buoys --branch main`. Verify the returned production URL and update `LIVE-STATE.md`. Never use a service-role key or scheduler token in frontend environment values.

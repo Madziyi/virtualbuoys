@@ -116,7 +116,7 @@ This identifier is configuration context, not proof of current live schema/deplo
 
 ## Hosting direction
 
-The selected static frontend path is Cloudflare Pages (Vite build command `npm ci && npm run build`, output directory `dist/`) with Supabase as a separate data/API service. This is a source-level decision only; hosting is not configured or deployed yet. See `docs/data-api-schema.md` for the live V1 schema and future API direction, and `LIVE-STATE.md` for verified deployments.
+The selected static frontend path is Cloudflare Pages (Vite build command `npm ci && npm run build`, output directory `dist/`) with Supabase as a separate data/API service. The initial frontend is deployed through Pages Direct Upload; see `LIVE-STATE.md` for verified deployment facts and `README.md` for the deployment procedure. See `docs/data-api-schema.md` for the V1 schema.
 
 ## Product principles
 
