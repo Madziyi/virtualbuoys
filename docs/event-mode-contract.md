@@ -141,6 +141,8 @@ Relationships:
 - DO profile becomes more vertically similar;
 - mixed profile should not instantly return to original stratification.
 
+Turnover dissolved oxygen is modeled internally as latent freshwater oxygen concentration (mg/L), never as a new public channel. After pre-roll, seed a stratified saturation profile (surface/deep gap at least 8 percentage points; target approximately 10–25) and convert each depth using `DOsat_mgL(T) = 14.652 - 0.41022T + 0.007991T² - 0.000077774T³`, with simple barometric correction `pressure_hPa / 1013.25`. During turnover, relax the two concentrations toward their common column mean according to the wind/wave mixing envelope, conserving their sum during the mixing operation. Recompute public saturation each frame using local water temperature and pressure. Acceptance uses initial and mixed three-hour windows: initial mean saturation gap ≥8 points; mixed mean concentration gap at least 60% smaller and saturation gap ≤5 points and lower than initial. This remains educational and is not a validated lake oxygen forecast.
+
 ### HAB-like
 
 Suggested phases:

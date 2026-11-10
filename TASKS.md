@@ -9,7 +9,7 @@ States:
 
 ## In progress
 
-- **VBUOY-005** `[in-progress]` — Client-local deterministic Event Mode: Normal/Storm/Turnover/HAB-like playback at 1×/2×/5×/10×, isolated from permanent data.
+- **VBUOY-005** `[in-progress]` — Event model acceptance passes using Terra-approved latent oxygen concentration approach; proceed with explorer UI integration and remaining UAT/deployment. See `NOW.md` and `LOG.md`.
 
 ## Ready
 

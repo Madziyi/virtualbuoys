@@ -1,7 +1,7 @@
 # Active Initiative
 
 **Initiative:** VBUOY-005 — Event Mode  
-**Status:** PLANNED — CLIENT-LOCAL EVENT PLAYBACK NEXT  
+**Status:** IN PROGRESS — EVENT MODEL ACCEPTANCE PASSED; UI INTEGRATION NEXT
 **Planner:** Terra  
 **Implementation / verification:** Luna / Codex
 
@@ -355,4 +355,4 @@ VBUOY-005 completion requires:
 
 ## Next action
 
-Luna syncs current `main` and executes VBUOY-005 exactly as defined here and in `docs/event-mode-contract.md`.
+Terra approved a third turnover oxygen approach: initialize a stratified profile, convert saturation to latent freshwater mg/L concentration, mix concentrations conservatively and recalculate public saturation from local temperature. The updated event acceptance harness passes all 8 tests for this model; proceed with VBUOY-005 UI integration and remaining verification. See `docs/event-mode-contract.md` and the latest `LOG.md` entry.

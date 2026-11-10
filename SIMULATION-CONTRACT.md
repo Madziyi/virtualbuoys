@@ -242,3 +242,5 @@ Playback contract:
 Scenario UI must clearly state that Event Mode is a separate synthetic educational scenario, not current conditions, a forecast or an operational warning.
 
 Detailed model/UI/acceptance rules are in `docs/event-mode-contract.md` and `NOW.md`.
+
+Turnover oxygen uses internal latent freshwater dissolved-oxygen concentration (mg/L) at 1 m and 8 m. A stratified saturation profile is converted with the freshwater temperature polynomial and simple pressure scaling, concentrations mix toward their common mean under the turnover envelope, and public saturation is recalculated at local temperature. This state is event-only and adds no public parameter or storage field. Window-based oxygen acceptance is defined in `docs/event-mode-contract.md`; Event Mode remains educational, not a validated forecast.
