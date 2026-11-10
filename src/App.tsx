@@ -11,8 +11,7 @@ function App() {
         </a>
         <nav aria-label="Main navigation">
           <a className="nav-active" href="#explore">Explore</a>
-          <a href="#about">About</a>
-          <a className="api-link" href="#api">API <span aria-hidden="true">↗</span></a>
+          <a className="api-link" href="#api">Access The Data <span aria-hidden="true">↗</span></a>
         </nav>
       </header>
 

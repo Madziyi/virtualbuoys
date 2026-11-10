@@ -309,3 +309,4 @@ button:focus-visible, select:focus-visible, summary:focus-visible, a:focus-visib
   .api-swagger .swagger-ui .opblock .opblock-summary { flex-wrap:wrap; }
   .api-swagger .swagger-ui .opblock .opblock-summary-description { flex-basis:100%; padding:6px 0 0 5px; }
 }
+@media(max-width:380px) { .topbar .brand { font-size:16px; gap:7px; } .topbar nav { gap:8px; font-size:12px; } .topbar .api-link { padding:8px; } }

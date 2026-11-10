@@ -152,3 +152,8 @@ Suggested format:
 - **Browser:** Desktop 1440 x 900: the GET /v1/buoys Try it out request returned HTTP 200 with all three buoys. Mobile 390 x 840: guidance and open playground inspected; client and scroll widths both 375 pixels.
 - **Next action:** Continue outstanding VBUOY-004 contract/security and dependency review.
 - **Checks:** 7 files / 16 tests passed; lint, typecheck, build and diff check passed. Build retains the existing large-chunk advisory.
+
+
+### 2026-11-09 - Navigation labels
+- **Changed:** Removed About from the header and renamed the API link Access The Data; its destination remains the API section. Added a narrow-screen spacing adjustment.
+- **Verification:** App tests 2 passed; diff check passed. No backend or live changes. VBUOY-004 remains partial.
