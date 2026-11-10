@@ -184,3 +184,14 @@ Suggested format:
 - **Verification:** `npm test`: 8 files / 19 tests passed; lint, typecheck, build, diff check and built-asset secret scan passed. Desktop and actual mobile 390 x 840 local modal inspected; prompt copy and Escape dismissal worked, mobile document client/scroll widths 375/375. Published deployment dialog and destination URLs verified in browser; no external chat was submitted.
 - **Live:** Pages Direct Upload deployment `f767120b-8a23-4405-8438-b041fb48069c`, https://f767120b.virtual-buoys.pages.dev/; production https://virtual-buoys.pages.dev/. Built from `943488d` plus uncommitted feature changes now captured in this handoff commit. Existing large-chunk advisory remains.
 - **Next action:** Owner reviews the chooser; no Event Mode work started.
+
+
+### 2026-11-09 — AI chooser accepted + VBUOY-005 Event Mode planning
+- **Review:** Terra resynced GitHub at `204a5a4378a94efb7f135bd48c4cb0c88a0f7830`. VBUOY-004 is already complete and the owner-requested AI integration chooser is committed, deployed and recorded in live state. No Event Mode work existed yet.
+- **Architecture decision:** VBUOY-005 Event Mode will be client-local and deterministic rather than creating public session tables/writes. Permanent Supabase observations and the VBUOY-004 API remain untouched.
+- **Scenarios:** Normal (24 h), Storm (24 h), Turnover (48 h) and HAB-like (72 h), all at the existing 10-minute sensor cadence and same 69-channel catalogue.
+- **Playback:** 1× means one 10-minute event frame per real second; 2×/5×/10× are playback multipliers. The UI must say this is playback speed, not real-time speed.
+- **Science/education:** Event scenarios use the existing normal generator plus smooth deterministic forcing. Turnover is defined by gradual loss of vertical temperature gradient; HAB-like by gradual pigment increase under warm/stable/low-mixing conditions; Storm by pressure/wind/wave/mixing evolution with lag/recovery.
+- **Isolation:** No VBUOY-005 database schema, cron or public API write routes. Reload ends the event. Event output is labelled `synthetic_event`.
+- **Verification:** Dedicated event-model harness and scenario-specific acceptance tests are required before UI/deployment.
+- **Next action:** Luna executes VBUOY-005 from `NOW.md` and `docs/event-mode-contract.md`.

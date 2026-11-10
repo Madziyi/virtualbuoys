@@ -210,3 +210,35 @@ Implementation rules from that analysis:
 - three buoys share regional forcing but use independent offsets/lags/noise;
 - do not assume strong turbidity/phycocyanin/chlorophyll/CDOM/wind correlations are universal across sites;
 - validate the normal generator with a deterministic accelerated 30-day run before live scheduling.
+
+
+## 13. VBUOY-005 Event Mode implementation decisions
+
+V1 Event Mode is **client-local, deterministic and non-persistent**.
+
+No event session tables, event observation tables, public write endpoints or event cron jobs are created in VBUOY-005. This intentionally supersedes the earlier idea that V1 necessarily required persisted `simulation_sessions` / `session_observations`.
+
+Reasons:
+- automatic isolation between visitors;
+- no contamination of permanent history;
+- no public write surface;
+- no per-session database growth;
+- deterministic classroom/demo playback;
+- simpler security boundary.
+
+Event Mode uses the same 69-channel public catalogue and builds on the existing normal generator with scenario-specific forcing.
+
+Initial scenarios and durations:
+- Normal — 24 h / 144 ten-minute frames;
+- Storm — 24 h / 144 frames;
+- Turnover — 48 h / 288 frames;
+- HAB-like — 72 h / 432 frames.
+
+Playback contract:
+- 1× = one ten-minute simulated frame per real second;
+- 2×, 5× and 10× multiply that playback rate;
+- playback speed does not alter generated values.
+
+Scenario UI must clearly state that Event Mode is a separate synthetic educational scenario, not current conditions, a forecast or an operational warning.
+
+Detailed model/UI/acceptance rules are in `docs/event-mode-contract.md` and `NOW.md`.

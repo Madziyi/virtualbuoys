@@ -62,6 +62,8 @@ and run it at:
 
 Event Mode must be isolated per simulation session. One visitor starting a HAB simulation must not alter the permanent public stream or another visitor's session.
 
+VBUOY-005 implements this isolation client-side: the deterministic event timeline lives only in that visitor's browser and is never written to the permanent observation tables.
+
 ### Public developer API
 The frontend and outside developers should use the same stable public API wherever practical.
 

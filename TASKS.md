@@ -9,11 +9,10 @@ States:
 
 ## In progress
 
-None currently.
+- **VBUOY-005** `[in-progress]` — Client-local deterministic Event Mode: Normal/Storm/Turnover/HAB-like playback at 1×/2×/5×/10×, isolated from permanent data.
 
 ## Ready
 
-- **VBUOY-005** `[ready]` — Event Mode: isolated Normal/Storm/Turnover/HAB simulations at 1×/2×/5×/10×.
 - **VBUOY-006** `[ready]` — Hardening: accelerated multi-day simulator tests, normal-cadence soak testing, API abuse controls, responsive/accessibility UAT.
 
 ## Blocked
