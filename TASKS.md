@@ -9,11 +9,11 @@ States:
 
 ## In progress
 
-- **VBUOY-005** `[done]` — Client-local deterministic Event Mode deployed and verified at desktop/mobile widths. See `NOW.md`, `LOG.md`, and `LIVE-STATE.md`.
+- **VBUOY-006** `[in-progress]` — Hardening: 365-day/multi-seed simulator acceptance, live 72-hour scheduler soak, bounded API abuse resistance, accessibility/responsive/reduced-motion UAT, and final security/dependency regression.
 
 ## Ready
 
-- **VBUOY-006** `[ready]` — Hardening: accelerated multi-day simulator tests, normal-cadence soak testing, API abuse controls, responsive/accessibility UAT.
+None currently.
 
 ## Blocked
 
@@ -21,6 +21,7 @@ None currently.
 
 ## Done
 
+- **VBUOY-005** `[done]` — Client-local deterministic Event Mode deployed and verified at desktop/mobile widths. See `NOW.md`, `LOG.md`, and `LIVE-STATE.md`.
 - Owner-requested AI integration chooser — editable student-friendly API prompt, ChatGPT/Claude links and Gemini copy fallback; deployed to Pages.
 
 - **VBUOY-004** `[done]` — Public REST API and OpenAPI playground deployed, contract/security/dependency reviewed and production desktop/mobile UAT completed. See NOW.md, LOG.md and LIVE-STATE.md.

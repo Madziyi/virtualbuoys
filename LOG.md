@@ -227,3 +227,13 @@ Suggested format:
 - **Regression:** Full `npm test`: 9 files / 27 tests, including all 8 event acceptance tests. Lint, typecheck, production build and `git diff --check` passed. Existing >500 kB chunk advisory remains. No full OpenAPI validator rerun (VBUOY-005 did not change the API contract).
 - **Status:** VBUOY-005 complete. Next initiative remains VBUOY-006; no VBUOY-006 work was included.
 - **Final source-aligned upload:** After committing verified source and durable evidence as `3722058`, rebuilt clean `main` and uploaded production deployment `a0241678-509f-4d69-8392-09be37c30d06` (Wrangler confirmed Production/main, source `3722058`). Reopened production at actual 390×840, confirmed Event Mode controls and `Day 1 · 00:10`, then exited; synthetic-event banner disappeared and the Central live stream returned with latest observation `2026-11-09 21:30` local time. Widths remained 375/375. This is the final production state.
+
+
+### 2026-11-09 — VBUOY-005 accepted + VBUOY-006 hardening planning
+- **Review:** Terra resynced GitHub at `aaaf77ab22352f3b9f2c37fe665fe122cc66b735` and accepted VBUOY-005 closure. Final production deployment `a0241678-509f-4d69-8392-09be37c30d06` is recorded in `LIVE-STATE.md`; source-aligned production smoke returned cleanly to the permanent stream.
+- **VBUOY-006 decision:** No new major feature. The next initiative hardens the completed product through a 365-day normal-generator run plus extra seeds, direct 72-hour production-stream/scheduler soak verification, API request-budget/abuse resistance, and broader accessibility/responsive/reduced-motion UAT.
+- **API direction:** Prefer strict bounded inputs, cheap rejection, upstream timeouts and controlled burst testing. Do not add a misleading per-instance in-memory rate limiter. Distributed per-client quotas may remain future scope if no reliable low-complexity native mechanism is available.
+- **Soak direction:** Use the real permanent stream already accumulated since VBUOY-002 rather than waiting days for a new soak. Any real gap must be investigated, not silently backfilled.
+- **Accessibility direction:** Add focused automated regression where practical, then verify 320/390/768/1440 widths, keyboard/focus, dialog focus restoration and reduced-motion behaviour.
+- **Deployment:** Only redeploy surfaces whose bytes/runtime changed; Direct Upload remains authoritative for frontend deployment.
+- **Next action:** Luna executes VBUOY-006 from `NOW.md` and records exact evidence in `docs/vbuoy-006-hardening.md`.
