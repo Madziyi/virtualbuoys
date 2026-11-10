@@ -1,7 +1,7 @@
 # Active Initiative
 
 **Initiative:** VBUOY-005 — Event Mode  
-**Status:** IN PROGRESS — EVENT MODEL ACCEPTANCE PASSED; UI INTEGRATION NEXT
+**Status:** IN PROGRESS — UI INTEGRATED; LOCAL BROWSER UAT REQUIRED
 **Planner:** Terra  
 **Implementation / verification:** Luna / Codex
 
@@ -355,4 +355,4 @@ VBUOY-005 completion requires:
 
 ## Next action
 
-Terra approved a third turnover oxygen approach: initialize a stratified profile, convert saturation to latent freshwater mg/L concentration, mix concentrations conservatively and recalculate public saturation from local temperature. The updated event acceptance harness passes all 8 tests for this model; proceed with VBUOY-005 UI integration and remaining verification. See `docs/event-mode-contract.md` and the latest `LOG.md` entry.
+Terra approved a third turnover oxygen approach: initialize a stratified profile, convert saturation to latent freshwater mg/L concentration, mix concentrations conservatively and recalculate public saturation from local temperature. Checkpoint `d155e18` is pushed. Event Mode is integrated; application checks and security probes pass. Complete local desktop/mobile browser UAT before deployment. Current browser automation cannot reach the local Vite server (`ERR_CONNECTION_TIMED_OUT` / `ERR_CONNECTION_REFUSED`); resolve this environment access issue, then continue production deployment and UAT. See latest `LOG.md` entry.
