@@ -177,3 +177,10 @@ Suggested format:
 - **Production UAT:** Desktop 1440 x 900, client/scroll widths 1425/1425: map, West selection, 24h temperature trend and 432-row CSV at depths 1/4/8 verified. Actual mobile 390 x 840, widths 375/375: Explore and Access The Data navigation, East selection, oxygen trend and 288-row CSV at 1/8 m verified. Swagger Try It Out GET /v1/buoys returned 200 with three buoys from deployed origin; guidance and examples visible, JavaScript copy showed Copied. No console warnings/errors observed; no full network capture available, though map tiles, data reads and API requests succeeded.
 - **Checks:** `npm test` 7 files / 17 tests; lint, typecheck, build and diff check passed. Build retains large-chunk advisory.
 - **Status:** VBUOY-004 complete; Event Mode not started. Next action: owner/Terra reviews closure and chooses the next initiative.
+
+
+### 2026-11-09 - AI integration chooser
+- **Changed:** Added a native accessible modal in Access The Data with ChatGPT, Gemini and Claude icons, an editable high-school-friendly prompt containing the live read-only API contract and synthetic-data caveats. ChatGPT/Claude receive the prompt in URL query links; Gemini opens with clipboard/paste and manual-copy fallback. Provider sign-in or changes to undocumented web prefill can affect behavior; provider-side prefill was not verified.
+- **Verification:** `npm test`: 8 files / 19 tests passed; lint, typecheck, build, diff check and built-asset secret scan passed. Desktop and actual mobile 390 x 840 local modal inspected; prompt copy and Escape dismissal worked, mobile document client/scroll widths 375/375. Published deployment dialog and destination URLs verified in browser; no external chat was submitted.
+- **Live:** Pages Direct Upload deployment `f767120b-8a23-4405-8438-b041fb48069c`, https://f767120b.virtual-buoys.pages.dev/; production https://virtual-buoys.pages.dev/. Built from `943488d` plus uncommitted feature changes now captured in this handoff commit. Existing large-chunk advisory remains.
+- **Next action:** Owner reviews the chooser; no Event Mode work started.

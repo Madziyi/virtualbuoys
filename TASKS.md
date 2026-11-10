@@ -22,6 +22,8 @@ None currently.
 
 ## Done
 
+- Owner-requested AI integration chooser — editable student-friendly API prompt, ChatGPT/Claude links and Gemini copy fallback; deployed to Pages.
+
 - **VBUOY-004** `[done]` — Public REST API and OpenAPI playground deployed, contract/security/dependency reviewed and production desktop/mobile UAT completed. See NOW.md, LOG.md and LIVE-STATE.md.
 
 - **VBUOY-003** `[done]` — Public explorer, verified live data, complete pagination/CSV coverage and desktop/mobile/keyboard UAT. See NOW.md and LOG.md for evidence.

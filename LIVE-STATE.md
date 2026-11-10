@@ -31,7 +31,7 @@ Do not record schema, migrations, functions, URLs, keys or deployed resources he
 ## Frontend hosting
 
 - Cloudflare Pages project `virtual-buoys`, production branch `main`, deployed by Wrangler Direct Upload on 2026-11-09 (America/New_York). Public production URL: https://virtual-buoys.pages.dev/.
-- Deployment ID `5315abf1-3c0d-4220-a65c-7a99af9aad7f`; immutable deployment URL https://5315abf1.virtual-buoys.pages.dev/. Wrangler reported source `129d73f`; the upload included the reviewed, uncommitted OpenAPI documentation changes recorded in the closure commit. The deployed site and its live data/API calls were verified in a browser.
+- Latest production deployment ID `f767120b-8a23-4405-8438-b041fb48069c`; immutable deployment URL https://f767120b.virtual-buoys.pages.dev/. Wrangler reported source `943488d`; the uploaded build included the AI chooser changes recorded in the following handoff commit. The deployed chooser was verified in a browser. The preceding VBUOY-004 closure deployment was `5315abf1-3c0d-4220-a65c-7a99af9aad7f` (https://5315abf1.virtual-buoys.pages.dev/).
 - Static Vite assets were built locally into `dist/` using only `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` from ignored local configuration. No Pages environment variables were configured. This is a Direct Upload project; Git commits do not automatically deploy, and Cloudflare does not support converting a Direct Upload project to Git integration.
 
 ## Database schema

@@ -1,3 +1,4 @@
+import { AiIntegration } from './AiIntegration'
 import { lazy, Suspense, useState } from 'react'
 const Playground = lazy(() => import('./ApiPlayground'))
 const base = 'https://dbsuryesimzatxhznurh.supabase.co/functions/v1/public-api'
@@ -21,6 +22,7 @@ export default function ApiSection() {
       </div>
       <div className="api-facts"><span className="api-facts-icon" aria-hidden="true">↗</span><div><strong>Made for learning</strong><p>All readings are synthetic, update every 10 minutes, and are not for operational use.</p></div></div>
     </div>
+    <AiIntegration />
     <div className="api-guide">
       <div className="api-guide-heading"><div><span className="eyebrow">No experience needed</span><h3>Try a request</h3></div><span className="api-guide-badge">No account or key required</span></div>
       <p>The playground lets you ask for data and see the answer right here. You don’t need to write code to try it.</p>

@@ -17,3 +17,7 @@ The public read-only V1 API and frontend playground are deployed. The production
 ## Next action
 
 Owner/Terra reviews the VBUOY-004 closure and selects the next initiative. VBUOY-005 has not been started.
+
+## Owner-requested AI integration handoff - 2026-11-09
+
+The Access The Data section now includes an editable, student-oriented API prompt and a chooser for ChatGPT, Gemini and Claude. ChatGPT/Claude receive the prompt through URL query links; web prefill is not a guaranteed documented contract and may require sign-in. Gemini uses copy-and-paste, with a manual fallback. The feature was deployed to Pages; see `LIVE-STATE.md` and `LOG.md`. VBUOY-004 remains complete; no Event Mode work was started.
