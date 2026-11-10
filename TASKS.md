@@ -9,7 +9,7 @@ States:
 
 ## In progress
 
-- **VBUOY-005** `[in-progress]` — Event engine checkpoint pushed; explorer controls integrated and checks pass. Local browser UAT is pending because the browser cannot reach Vite; deployment remains outstanding. See `NOW.md` and `LOG.md`.
+- **VBUOY-005** `[done]` — Client-local deterministic Event Mode deployed and verified at desktop/mobile widths. See `NOW.md`, `LOG.md`, and `LIVE-STATE.md`.
 
 ## Ready
 

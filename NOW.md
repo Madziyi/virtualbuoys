@@ -1,7 +1,7 @@
 # Active Initiative
 
 **Initiative:** VBUOY-005 — Event Mode  
-**Status:** IN PROGRESS — UI INTEGRATED; LOCAL BROWSER UAT REQUIRED
+**Status:** COMPLETE — EVENT MODE DEPLOYED AND VERIFIED
 **Planner:** Terra  
 **Implementation / verification:** Luna / Codex
 
@@ -355,4 +355,4 @@ VBUOY-005 completion requires:
 
 ## Next action
 
-Terra approved a third turnover oxygen approach: initialize a stratified profile, convert saturation to latent freshwater mg/L concentration, mix concentrations conservatively and recalculate public saturation from local temperature. Checkpoint `d155e18` is pushed. Event Mode is integrated; application checks and security probes pass. Complete local desktop/mobile browser UAT before deployment. Current browser automation cannot reach the local Vite server (`ERR_CONNECTION_TIMED_OUT` / `ERR_CONNECTION_REFUSED`); resolve this environment access issue, then continue production deployment and UAT. See latest `LOG.md` entry.
+VBUOY-005 is complete. Event Mode remains client-local and deterministic; turnover oxygen uses internal latent freshwater mg/L concentration while public output remains saturation percent. Engine checkpoint `d155e18` and UI checkpoint `b135d3f` are pushed. Preview and production UAT passed at desktop and true 390 px mobile; security/isolation probes passed. Production Pages deployment `927e9198` is recorded in `LIVE-STATE.md`. See latest `LOG.md` entry.
