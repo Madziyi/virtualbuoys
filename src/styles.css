@@ -261,3 +261,51 @@ button:focus-visible, select:focus-visible, summary:focus-visible, a:focus-visib
 .measurement-copy strong { font-size:14px; line-height:1.35; font-weight:600; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
 .measurement-arrow { margin-left:auto; color:#8496a1; font-size:13px; }
 @media(max-width:380px) { .measurement-card { padding:10px 8px; gap:7px; } .measurement-icon { width:29px; height:29px; } .measurement-copy strong { font-size:13px; } }
+/* API introduction and interactive reference */
+.api-intro { display:grid; grid-template-columns:minmax(0,1.7fr) minmax(230px,1fr); gap:32px; align-items:center; }
+.api-intro h2 { margin:8px 0 12px; }
+.api-section .api-lede { max-width:690px; margin:0; font-size:15px; line-height:1.65; }
+.api-facts { display:flex; gap:12px; align-items:flex-start; padding:18px; border:1px solid #d7e5f8; border-radius:12px; background:#eff6ff; }
+.api-facts-icon { display:grid; place-items:center; flex:none; height:32px; width:32px; border-radius:9px; background:#fff; color:#2563eb; font-size:18px; }
+.api-facts strong { color:#15262f; font-size:14px; }
+.api-facts p { margin:5px 0 0; font-size:13px; }
+.api-guide, .api-code-section { margin-top:28px; padding:24px; background:#fff; border:1px solid #dce6eb; border-radius:12px; min-width:0; }
+.api-guide h3, .api-code-section h3 { margin:5px 0 0; font-size:19px; letter-spacing:-.2px; }
+.api-guide-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.api-guide-badge { padding:7px 10px; border-radius:999px; background:#eff6ff; color:#1d4ed8; font-size:12px; font-weight:600; }
+.api-steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; list-style:none; padding:0; margin:20px 0; }
+.api-steps li { display:flex; gap:10px; padding:14px; background:#f3f6fa; border-radius:10px; }
+.api-steps li > span { display:grid; place-items:center; flex:none; width:25px; height:25px; border-radius:50%; color:#1d4ed8; background:#e3edff; font-size:12px; font-weight:600; }
+.api-steps strong, .api-steps small { display:block; }
+.api-steps strong { font-size:13px; } .api-steps small { margin-top:4px; font-size:12px; line-height:1.4; color:#52646f; }
+.api-first-example { border-left:3px solid #93b4f5; padding:4px 0 4px 14px; }
+.api-first-example code { overflow-wrap:anywhere; color:#1d4ed8; }
+.api-toggle { border:0; cursor:pointer; margin-top:6px; }
+.api-endpoint { display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 14px; padding:12px 14px; margin-top:18px; background:#f3f6fa; border-radius:8px; font-size:12px; }
+.api-endpoint span { font-weight:600; color:#52646f; } .api-endpoint code { min-width:0; }
+.api-code-section .api-examples > div { background:#f8fafc; }
+.api-back { margin:24px 0 0; } .api-back a { color:#1d4ed8; font-weight:600; }
+.api-swagger { border:1px solid #dce6eb; background:#f8fafc; border-radius:12px; padding:20px; }
+.api-swagger .swagger-ui { color:#15262f; font-family:'Google Sans',Arial,sans-serif; }
+.api-swagger .swagger-ui .info { margin:0 0 24px; }
+.api-swagger .swagger-ui .info .title { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:0 0 12px; color:#15262f; font-family:'Google Sans',Arial,sans-serif; font-size:24px; line-height:1.25; letter-spacing:normal; font-weight:600; }
+.api-swagger .swagger-ui .info .title small { position:static; margin:0; letter-spacing:normal; }
+.api-swagger .swagger-ui .info p { margin:0; color:#52646f; font-size:13px; line-height:1.6; }
+.api-swagger .swagger-ui .scheme-container { box-shadow:none; border:1px solid #dce6eb; border-radius:10px; padding:16px; margin:0 0 22px; }
+.api-swagger .swagger-ui .servers { margin:0; }
+.api-swagger .swagger-ui select { max-width:100%; border:1px solid #cbd8e1; border-radius:8px; font-size:12px; }
+.api-swagger .swagger-ui .opblock-tag { margin:0; padding:12px 0; font-size:17px; letter-spacing:normal; }
+.api-swagger .swagger-ui .opblock { border-radius:9px; box-shadow:none; }
+.api-swagger .swagger-ui .opblock .opblock-summary-path { font-size:13px; overflow-wrap:anywhere; }
+.api-swagger .swagger-ui .opblock .opblock-summary-description { font-size:12px; }
+.api-swagger .swagger-ui .opblock-body { overflow-x:auto; }
+.api-swagger .swagger-ui .btn { border-radius:8px; }
+@media(max-width:720px) {
+  .api-intro, .api-steps { grid-template-columns:1fr; } .api-intro { gap:18px; }
+  .api-guide, .api-code-section { padding:18px 14px; }
+  .api-steps { gap:8px; } .api-steps li { padding:12px; }
+  .api-swagger { padding:14px 10px; }
+  .api-swagger .swagger-ui .info .title { font-size:20px; }
+  .api-swagger .swagger-ui .opblock .opblock-summary { flex-wrap:wrap; }
+  .api-swagger .swagger-ui .opblock .opblock-summary-description { flex-basis:100%; padding:6px 0 0 5px; }
+}

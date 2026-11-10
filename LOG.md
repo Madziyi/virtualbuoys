@@ -145,3 +145,10 @@ Suggested format:
 - **Verification:** 7 files / 16 tests passed, including depth grouping, direction formatting and card selection; lint, typecheck, build and diff check passed. Build retains existing large-chunk advisory.
 - **Browser:** Desktop 1440 x 900: West selection and card values inspected. Mobile actual 390 x 840: 8 m oxygen card selected the oxygen trend; document client/scroll widths both 375 pixels.
 - **Next action:** Continue outstanding VBUOY-004 contract/security and dependency review.
+
+
+### 2026-11-09 - API playground presentation
+- **Changed:** Added a plain-language explanation of the API, guided first request, synthetic-data context, copy feedback and a clearer layout. Scoped Swagger styling fixes the compressed heading and labels the request group. No API behavior or live configuration changed.
+- **Browser:** Desktop 1440 x 900: the GET /v1/buoys Try it out request returned HTTP 200 with all three buoys. Mobile 390 x 840: guidance and open playground inspected; client and scroll widths both 375 pixels.
+- **Next action:** Continue outstanding VBUOY-004 contract/security and dependency review.
+- **Checks:** 7 files / 16 tests passed; lint, typecheck, build and diff check passed. Build retains the existing large-chunk advisory.

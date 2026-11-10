@@ -362,3 +362,8 @@ The owner requested the Hardwater Trends/Compare chart style. History now uses a
 ## Depth-grouped reading cards - 2026-11-09
 
 The buoy detail now groups measurements into weather and surface, then actual 1 m, 2 m, 4 m and 8 m depths. Individual cards open the corresponding parameter trend. VBUOY-004 remains partial pending its prior contract/security and dependency review.
+
+
+## Playground presentation - 2026-11-09
+
+The playground has a plain-language introduction, a guided first request and refreshed Swagger presentation. VBUOY-004 remains partial pending its existing contract/security and dependency review.

@@ -94,7 +94,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Requests"
+        ]
       }
     },
     "/v1/buoys": {
@@ -168,7 +171,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Requests"
+        ]
       }
     },
     "/v1/buoys/{slug}": {
@@ -261,7 +267,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Requests"
+        ]
       }
     },
     "/v1/buoys/{slug}/latest": {
@@ -369,7 +378,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Requests"
+        ]
       }
     },
     "/v1/buoys/{slug}/observations": {
@@ -533,7 +545,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Requests"
+        ]
       }
     },
     "/v1/parameters": {
@@ -607,7 +622,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Requests"
+        ]
       }
     }
   },
@@ -755,5 +773,11 @@
         }
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "Requests",
+      "description": "Choose a request, select Try it out, then Execute to see the response."
+    }
+  ]
 }
