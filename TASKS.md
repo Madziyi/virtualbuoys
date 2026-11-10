@@ -9,7 +9,7 @@ States:
 
 ## In progress
 
-- **VBUOY-004** `[in-progress]` — Public read-only REST API, versioned OpenAPI 3.1 contract, interactive playground, and curl/JavaScript/Python examples.
+- **VBUOY-004** `[in-progress]` — API/playground implemented; closure remains: OpenAPI contract review, security/dependency review, frontend deployment, and production desktop/390px UAT.
 
 ## Ready
 

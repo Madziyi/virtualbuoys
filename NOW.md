@@ -367,3 +367,50 @@ The buoy detail now groups measurements into weather and surface, then actual 1 
 ## Playground presentation - 2026-11-09
 
 The playground has a plain-language introduction, a guided first request and refreshed Swagger presentation. VBUOY-004 remains partial pending its existing contract/security and dependency review.
+
+
+## Terra review — 2026-11-09 status after UI polish
+
+GitHub `main` is at `e9277cf9f0a9999e2bc6378a094683b1edc035a7`.
+
+The recent presentation/navigation work is accepted as source work, but **VBUOY-004 remains partial** because the frontend is not deployed and the existing contract/security/dependency closure items are still open.
+
+### Remaining closure work
+
+1. **Contract review**
+   - validate `docs/openapi.yaml` as OpenAPI 3.1;
+   - compare each documented route, parameter, status code and response schema against the live `public-api` function;
+   - add/strengthen contract tests where the current suite does not detect drift.
+
+2. **Security review**
+   - confirm the public API still exposes GET/OPTIONS only;
+   - verify generator state remains inaccessible;
+   - verify anonymous observation writes still fail;
+   - verify scheduler function without token remains 401;
+   - inspect built frontend assets for accidental secret/service-role/scheduler-token exposure.
+
+3. **Dependency review**
+   - rerun production `npm audit`;
+   - document remaining advisories by package/severity/direct-vs-transitive/runtime relevance;
+   - do not use `npm audit fix --force` unless the owner explicitly approves a breaking dependency change;
+   - fix non-breaking/high-confidence advisories where possible, otherwise record accepted residual risk for V1.
+
+4. **Frontend deployment**
+   - deploy the current Vite frontend using the selected Cloudflare Pages path or, if deployment constraints make that unsuitable, document the alternative before changing direction;
+   - configure only public frontend environment values;
+   - update `LIVE-STATE.md` with the exact verified deployment URL/configuration.
+
+5. **Production UAT**
+   - verify the deployed site, not localhost, at desktop and actual 390 CSS px;
+   - confirm Explore and Access The Data work;
+   - verify Swagger Try It Out reaches the live API successfully from the deployed origin;
+   - confirm map, trends, CSV, API docs and navigation function without horizontal overflow;
+   - check browser console/network for material errors.
+
+### Closure rule
+
+Do not close VBUOY-004 merely because local app tests pass. Close it only after contract/security/dependency review and deployed frontend UAT are complete.
+
+## Next action
+
+Luna performs the VBUOY-004 closure/deployment pass above, updates durable context with exact evidence, and pushes the final handoff.

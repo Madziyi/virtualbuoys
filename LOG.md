@@ -157,3 +157,12 @@ Suggested format:
 ### 2026-11-09 - Navigation labels
 - **Changed:** Removed About from the header and renamed the API link Access The Data; its destination remains the API section. Added a narrow-screen spacing adjustment.
 - **Verification:** App tests 2 passed; diff check passed. No backend or live changes. VBUOY-004 remains partial.
+
+
+### 2026-11-09 — Terra review after navigation/presentation polish
+- **GitHub:** Verified `main` at `e9277cf9f0a9999e2bc6378a094683b1edc035a7` (`Update navigation labels`).
+- **Accepted:** Recent UI/presentation work is pushed and local app checks passed; API function remains live from prior VBUOY-004 work.
+- **Deployment status:** Frontend is still not deployed. Cloudflare Pages remains the selected but unconfigured hosting direction in `LIVE-STATE.md`.
+- **Decision:** Keep VBUOY-004 active. Local tests are not sufficient for closure.
+- **Remaining:** OpenAPI/live-contract comparison, security regression + built-asset secret scan, production dependency audit review, frontend deployment, and production-origin desktop/390px UAT including Swagger Try It Out.
+- **Next action:** Luna performs the VBUOY-004 closure/deployment pass from `NOW.md`.
