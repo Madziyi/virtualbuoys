@@ -237,3 +237,11 @@ Suggested format:
 - **Accessibility direction:** Add focused automated regression where practical, then verify 320/390/768/1440 widths, keyboard/focus, dialog focus restoration and reduced-motion behaviour.
 - **Deployment:** Only redeploy surfaces whose bytes/runtime changed; Direct Upload remains authoritative for frontend deployment.
 - **Next action:** Luna executes VBUOY-006 from `NOW.md` and records exact evidence in `docs/vbuoy-006-hardening.md`.
+
+### 2026-11-11 — VBUOY-006 buoy display polish (partial)
+- **Changed:** Added a relative “Updated … ago” label beside the selected buoy title; removed the duplicate synthetic badge, latest-observation paragraph and coordinates from that detail header; put Trends behind a collapsed-by-default “Explore The Trends” disclosure; changed the map's letter pins to labeled dots for West, Central and East.
+- **Preview:** Cloudflare Pages preview deployment `20d98908-8e2c-495c-9b6b-eb649f927879` at https://20d98908.virtual-buoys.pages.dev/. Browser check showed the relative age beside the buoy title, no removed header metadata, the collapsed trend control and all three named map dots. Opening the disclosure exposed the existing chart/history controls.
+- **Production:** Cloudflare Pages production deployment `8d45abf1-2b83-48f2-afae-80d179a28dfe` at https://8d45abf1.virtual-buoys.pages.dev/. Wrangler confirmed Production/main and source `ae88cad`; browser confirmed named map dots and the title update age. Live readings loaded after the initial loading state.
+- **Verification:** `npm run typecheck`, `npm run build`, and `git diff --check` passed. The build retains the existing >500 kB chunk warning. Tests and lint were not run for this visual-only change.
+- **Responsive/UAT limit:** The local browser could not reach Vite. The deployed browser viewport was about 522×509, so the required VBUOY-006 1440×900 and true 390px checks, horizontal-overflow measurement, keyboard/reduced-motion checks and console/network audit remain outstanding. VBUOY-006 remains in progress; this change does not close the initiative.
+- **Next:** Continue the active VBUOY-006 hardening plan; complete its full responsive/accessibility UAT matrix before recording that work complete.
